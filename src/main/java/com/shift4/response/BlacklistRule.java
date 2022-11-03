@@ -1,0 +1,106 @@
+package com.shift4.response;
+
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.shift4.enums.BlacklistRuleType;
+import com.shift4.util.Shift4Utils;
+
+import java.util.HashMap;
+import java.util.Map;
+
+public class BlacklistRule {
+
+	private String id;
+	private Long created;
+	private boolean deleted = false;
+
+	private String ruleType;
+
+	private String fingerprint;
+	private String ipAddress;
+	private String ipCountry;
+	private String metadataKey;
+	private String metadataValue;
+	private String email;
+	private String userAgent;
+	private String acceptLanguage;
+	private String cardCountry;
+	private String cardBin;
+	private String cardIssuer;
+
+	@JsonIgnore
+	private final Map<String, Object> other = new HashMap<>();
+
+	public String getId() {
+		return id;
+	}
+
+	public Long getCreated() {
+		return created;
+	}
+
+	public boolean isDeleted() {
+		return deleted;
+	}
+
+	public BlacklistRuleType getRuleType() {
+		return BlacklistRuleType.fromValue(ruleType);
+	}
+
+	public String getRuleTypeAsString() {
+		return ruleType;
+	}
+
+	public String getFingerprint() {
+		return fingerprint;
+	}
+
+	public String getIpAddress() {
+		return ipAddress;
+	}
+
+	public String getIpCountry() {
+		return ipCountry;
+	}
+
+	public String getMetadataKey() {
+		return metadataKey;
+	}
+
+	public String getMetadataValue() {
+		return metadataValue;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public String getUserAgent() {
+		return userAgent;
+	}
+
+	public String getAcceptLanguage() {
+		return acceptLanguage;
+	}
+
+	public String getCardCountry() {
+		return cardCountry;
+	}
+
+	public String getCardBin() {
+		return cardBin;
+	}
+
+	public String getCardIssuer() {
+		return cardIssuer;
+	}
+
+	public String get(String name) {
+		return Shift4Utils.toStringNullSafe(other.get(name));
+	}
+
+	@JsonAnySetter
+	private void set(String name, Object value) {
+		other.put(name, value);
+	}
+}
