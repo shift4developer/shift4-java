@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PaymentMethodType {
 
+	APPLE_PAY("apple_pay"),
 	ALIPAY("alipay"),
 	BANCONTACT("bancontact"),
 	BLIK("blik"),
