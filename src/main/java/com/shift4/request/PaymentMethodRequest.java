@@ -16,6 +16,7 @@ public class PaymentMethodRequest {
 	private String customerId;
 	private PaymentMethodType type;
 	private BillingRequest billing;
+	private ApplePay applePay;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -47,6 +48,10 @@ public class PaymentMethodRequest {
 		return billing;
 	}
 
+	public ApplePay getApplePay() {
+		return applePay;
+	}
+
 	public PaymentMethodRequest id(String id) {
 		this.id = id;
 		return this;
@@ -71,6 +76,11 @@ public class PaymentMethodRequest {
 		return this;
 	}
 
+	public PaymentMethodRequest applePay(ApplePay applePay) {
+		this.applePay = applePay;
+		return this;
+	}
+
 	@JsonAnyGetter
 	private Map<String, Object> getOtherMap() {
 		return other;
@@ -80,5 +90,36 @@ public class PaymentMethodRequest {
 	public PaymentMethodRequest set(String name, Object value) {
 		other.put(name, value);
 		return this;
+	}
+
+	public static class ApplePay {
+		private Object token;
+
+		public ApplePay(Object token) {
+			this.token = token;
+		}
+
+		public ApplePay() {
+		}
+
+		public ApplePay token(Object token) {
+			this.token = token;
+			return this;
+		}
+
+		@JsonIgnore
+		private final Map<String, Object> other = new HashMap<>();
+
+
+		@JsonAnyGetter
+		private Map<String, Object> getOtherMap() {
+			return other;
+		}
+
+		@JsonAnySetter
+		public ApplePay set(String name, Object value) {
+			other.put(name, value);
+			return this;
+		}
 	}
 }
