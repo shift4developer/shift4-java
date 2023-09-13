@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public enum RefundStatus {
 
     FAILED("failed"),
+    PENDING("pending"),
     SUCCESSFUL("successful"),
 
     /**

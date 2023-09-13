@@ -1,4 +1,3 @@
-
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;

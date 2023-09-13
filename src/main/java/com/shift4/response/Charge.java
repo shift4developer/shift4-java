@@ -33,6 +33,7 @@ public class Charge {
 	private Shipping shipping;
 	private Billing billing;
 	private ThreeDSecureInfo threeDSecureInfo;
+	private AvsCheck avsCheck;
 
 	private FromCrossSale fromCrossSale;
 	private List<WithCrossSale> withCrossSales;
@@ -133,6 +134,8 @@ public class Charge {
 	public ThreeDSecureInfo getThreeDSecureInfo() {
 		return threeDSecureInfo;
 	}
+
+	public AvsCheck getAvsCheck() { return avsCheck; }
 
 	public FromCrossSale getFromCrossSale() {
 		return fromCrossSale;
