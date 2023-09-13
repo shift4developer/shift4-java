@@ -33,9 +33,9 @@ public class ShippingRequest {
 		return address;
 	}
 
-  public String getPhone() {
-      return phone;
-  }
+	public String getPhone() {
+		return phone;
+	}
 
 	public ShippingRequest name(String name) {
 		this.name = name;
@@ -47,10 +47,10 @@ public class ShippingRequest {
 		return this;
 	}
 
-  public ShippingRequest phone(String phone) {
-      this.phone = phone;
-      return this;
-  }
+	public ShippingRequest phone(String phone) {
+		this.phone = phone;
+		return this;
+	}
 
 	@JsonAnyGetter
 	private Map<String, Object> getOtherMap() {

@@ -14,7 +14,7 @@ public class BillingRequest {
 	private AddressRequest address;
 	private String vat;
 	private String email;
-  private String phone;
+	private String phone;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -44,9 +44,9 @@ public class BillingRequest {
 		return email;
 	}
 
-  public String getPhone() {
-    return phone;
-  }
+	public String getPhone() {
+		return phone;
+	}
 
 	public BillingRequest name(String name) {
 		this.name = name;
@@ -68,10 +68,10 @@ public class BillingRequest {
 		return this;
 	}
 
-  public BillingRequest phone(String phone) {
-      this.phone = phone;
-      return this;
-  }
+	public BillingRequest phone(String phone) {
+		this.phone = phone;
+		return this;
+	}
 
 	@JsonAnyGetter
 	private Map<String, Object> getOtherMap() {
