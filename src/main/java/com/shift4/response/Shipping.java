@@ -10,6 +10,7 @@ import java.util.Map;
 public class Shipping {
 	private String name;
 	private Address address;
+	private String phone;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -20,6 +21,10 @@ public class Shipping {
 
 	public Address getAddress() {
 		return address;
+	}
+
+	public String getPhone() {
+		return phone;
 	}
 
 	public String get(String name) {

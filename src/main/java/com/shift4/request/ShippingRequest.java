@@ -12,6 +12,7 @@ import java.util.Map;
 public class ShippingRequest {
 	private String name;
 	private AddressRequest address;
+	private String phone;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -32,6 +33,10 @@ public class ShippingRequest {
 		return address;
 	}
 
+	public String getPhone() {
+		return phone;
+	}
+
 	public ShippingRequest name(String name) {
 		this.name = name;
 		return this;
@@ -39,6 +44,11 @@ public class ShippingRequest {
 
 	public ShippingRequest address(AddressRequest address) {
 		this.address = address;
+		return this;
+	}
+
+	public ShippingRequest phone(String phone) {
+		this.phone = phone;
 		return this;
 	}
 

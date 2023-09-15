@@ -11,6 +11,7 @@ public enum ErrorCode {
 	INVALID_CVC("invalid_cvc"),
 	INCORRECT_CVC("incorrect_cvc"),
 	INCORRECT_ZIP("incorrect_zip"),
+	INCORRECT_ADDRESS("incorrect_address"),
 	EXPIRED_CARD("expired_card"),
 	INSUFFICIENT_FUNDS("insufficient_funds"),
 	LOST_OR_STOLEN("lost_or_stolen"),
@@ -24,6 +25,7 @@ public enum ErrorCode {
 	AUTHENTICATION_REQUIRED("authentication_required"),
 	DO_NOT_TRY_AGAIN("do_not_try_again"),
 	CURRENCY_NOT_SUPPORTED("currency_not_supported"),
+	BRAND_NOT_SUPPORTED("brand_not_supported"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.

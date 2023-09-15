@@ -14,6 +14,7 @@ public class FraudCheckData {
 	private String email;
 	private String userAgent;
 	private String acceptLanguage;
+	private String browserFingerprint;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -36,6 +37,10 @@ public class FraudCheckData {
 
 	public String getAcceptLanguage() {
 		return acceptLanguage;
+	}
+
+	public String getBrowserFingerprint() {
+		return browserFingerprint;
 	}
 
 	public String get(String name) {
