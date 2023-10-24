@@ -21,7 +21,7 @@ public class SubscriptionUpdateRequest {
 	private CardRequest card;
 	private Integer quantity;
 	private Boolean captureCharges;
-	private Long trialEnd;
+	private String currentPeriodEnd;
 	private ShippingRequest shipping;
 	private BillingRequest billing;
 	private String merchantAccountId;
@@ -61,8 +61,8 @@ public class SubscriptionUpdateRequest {
 		return captureCharges;
 	}
 
-	public Long getTrialEnd() {
-		return trialEnd;
+	public String getCurrentPeriodEnd() {
+		return currentPeriodEnd;
 	}
 
 	public ShippingRequest getShipping() {
@@ -114,8 +114,17 @@ public class SubscriptionUpdateRequest {
 		return this;
 	}
 
-	public SubscriptionUpdateRequest trialEnd(Long trialEnd) {
-		this.trialEnd = trialEnd;
+	public SubscriptionUpdateRequest currentPeriodEnd(Long currentPeriodEnd) {
+		if (currentPeriodEnd == null) {
+			this.currentPeriodEnd = null;
+		} else {
+			this.currentPeriodEnd = currentPeriodEnd.toString();
+		}
+		return this;
+	}
+
+	public SubscriptionUpdateRequest currentPeriodEndNow() {
+		this.currentPeriodEnd = "now";
 		return this;
 	}
 
