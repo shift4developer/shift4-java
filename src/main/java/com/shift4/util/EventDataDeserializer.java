@@ -23,7 +23,6 @@ public class EventDataDeserializer extends JsonDeserializer<Object> {
         OBJECT_TYPES.put("dispute", Dispute.class);
         OBJECT_TYPES.put("plan", Plan.class);
         OBJECT_TYPES.put("subscription", Subscription.class);
-        OBJECT_TYPES.put("crossSaleOffer", CrossSaleOffer.class);
         OBJECT_TYPES.put("payout", Payout.class);
         OBJECT_TYPES.put("paymentMethod", PaymentMethod.class);
     }

@@ -39,7 +39,6 @@ public class Shift4Gateway implements Closeable {
     private static final String SUBSCRIPTIONS_PATH = "/subscriptions";
     private static final String EVENTS_PATH = "/events";
     private static final String BLACKLIST_RULE_PATH = "/blacklist";
-    private static final String CROSS_SALE_OFFER_PATH = "/cross-sale-offers";
     private static final String CREDIT_PATH = "/credits";
     private static final String FILES_PATH = "/files";
     private static final String DISPUTES_PATH = "/disputes";
@@ -241,30 +240,6 @@ public class Shift4Gateway implements Closeable {
 
     public ListResponse<BlacklistRule> listBlacklistRules(BlacklistRuleListRequest request) {
         return list(BLACKLIST_RULE_PATH, request, BlacklistRule.class);
-    }
-
-    public CrossSaleOffer createCrossSaleOffer(CrossSaleOfferRequest request) {
-        return post(CROSS_SALE_OFFER_PATH, request, CrossSaleOffer.class);
-    }
-
-    public CrossSaleOffer retrieveCrossSaleOffer(String crossSaleOfferId) {
-        return get(CROSS_SALE_OFFER_PATH + "/" + crossSaleOfferId, CrossSaleOffer.class);
-    }
-
-    public CrossSaleOffer updateCrossSaleOffer(CrossSaleOfferUpdateRequest request) {
-        return post(CROSS_SALE_OFFER_PATH + "/" + request.getCrossSaleOfferId(), request, CrossSaleOffer.class);
-    }
-
-    public DeleteResponse deleteCrossSaleOffer(String crossSaleOfferId) {
-        return delete(CROSS_SALE_OFFER_PATH + "/" + crossSaleOfferId, DeleteResponse.class);
-    }
-
-    public ListResponse<CrossSaleOffer> listCrossSaleOffers() {
-        return list(CROSS_SALE_OFFER_PATH, CrossSaleOffer.class);
-    }
-
-    public ListResponse<CrossSaleOffer> listCrossSaleOffers(CrossSaleOfferListRequest request) {
-        return list(CROSS_SALE_OFFER_PATH, request, CrossSaleOffer.class);
     }
 
     public Credit createCredit(CreditRequest request) {

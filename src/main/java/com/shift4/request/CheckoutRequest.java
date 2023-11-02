@@ -22,7 +22,6 @@ public class CheckoutRequest {
 	private CustomCharge customCharge;
 
 	private String customerId;
-	private List<String> crossSaleOfferIds;
 	private Boolean rememberMe;
 	private ThreeDSecureRequest threeDSecure;
 
@@ -58,9 +57,6 @@ public class CheckoutRequest {
 		return customerId;
 	}
 
-	public List<String> getCrossSaleOfferIds() {
-		return crossSaleOfferIds;
-	}
 
 	public Boolean getRememberMe() {
 		return rememberMe;
@@ -104,15 +100,6 @@ public class CheckoutRequest {
 
 	public CheckoutRequest customer(Customer customer) {
 		return customerId(customer.getId());
-	}
-
-	public CheckoutRequest crossSaleOfferIds(String... crossSaleOfferIds) {
-		return crossSaleOfferIds(Arrays.asList(crossSaleOfferIds));
-	}
-
-	public CheckoutRequest crossSaleOfferIds(List<String> crossSaleOfferIds) {
-		this.crossSaleOfferIds = crossSaleOfferIds;
-		return this;
 	}
 
 	public CheckoutRequest rememberMe(boolean rememberMe) {
