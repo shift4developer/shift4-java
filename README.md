@@ -14,7 +14,7 @@ To do this you will need to add this configuration to your `pom.xml`:
 <dependency>
     <groupId>com.shift4</groupId>
     <artifactId>shift4-java</artifactId>
-    <version>1.3.0</version>
+    <version>2.0.0</version>
 </dependency>
 ```
 

@@ -31,7 +31,6 @@ public class Subscription {
 	private Shipping shipping;
 	private Billing billing;
 	private ThreeDSecureInfo threeDSecureInfo;
-	private Charge.FromCrossSale fromCrossSale;
 	private String merchantAccountId;
 	private Map<String, String> metadata;
 
@@ -120,10 +119,6 @@ public class Subscription {
 
 	public ThreeDSecureInfo getThreeDSecureInfo() {
 		return threeDSecureInfo;
-	}
-
-	public Charge.FromCrossSale getFromCrossSale() {
-		return fromCrossSale;
 	}
 
 	public String getMerchantAccountId() {

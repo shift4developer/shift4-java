@@ -35,9 +35,6 @@ public class Charge {
 	private ThreeDSecureInfo threeDSecureInfo;
 	private AvsCheck avsCheck;
 
-	private FromCrossSale fromCrossSale;
-	private List<WithCrossSale> withCrossSales;
-
 	private Dispute dispute;
 
 	private String merchantAccountId;
@@ -137,14 +134,6 @@ public class Charge {
 
 	public AvsCheck getAvsCheck() { return avsCheck; }
 
-	public FromCrossSale getFromCrossSale() {
-		return fromCrossSale;
-	}
-
-	public List<WithCrossSale> getWithCrossSales() {
-		return withCrossSales;
-	}
-
 	public Dispute getDispute() {
 		return dispute;
 	}
@@ -184,76 +173,5 @@ public class Charge {
 	@JsonAnySetter
 	private void set(String name, Object value) {
 		other.put(name, value);
-	}
-
-	public static class FromCrossSale {
-		private String offerId;
-		private String partnerId;
-
-		@JsonIgnore
-		private final Map<String, Object> other = new HashMap<>();
-
-		public String getOfferId() {
-			return offerId;
-		}
-
-		public String getPartnerId() {
-			return partnerId;
-		}
-
-		public String get(String name) {
-			return Shift4Utils.toStringNullSafe(other.get(name));
-		}
-
-		@JsonAnySetter
-		private void set(String name, Object value) {
-			other.put(name, value);
-		}
-	}
-
-	public static class WithCrossSale {
-		private String offerId;
-		private String partnerId;
-
-		private String chargeId;
-		private Integer amount;
-		private String currency;
-		private String subscriptionId;
-
-		@JsonIgnore
-		private final Map<String, Object> other = new HashMap<>();
-
-		public String getOfferId() {
-			return offerId;
-		}
-
-		public String getPartnerId() {
-			return partnerId;
-		}
-
-		public String getChargeId() {
-			return chargeId;
-		}
-
-		public String getSubscriptionId() {
-			return subscriptionId;
-		}
-
-		public Integer getAmount() {
-			return amount;
-		}
-
-		public String getCurrency() {
-			return currency;
-		}
-
-		public String get(String name) {
-			return Shift4Utils.toStringNullSafe(other.get(name));
-		}
-
-		@JsonAnySetter
-		private void set(String name, Object value) {
-			other.put(name, value);
-		}
 	}
 }
