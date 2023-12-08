@@ -4,7 +4,8 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ErrorCode {
-
+	AMOUNT_TOO_HIGH("amount_too_high"),
+	AMOUNT_TOO_LOW("amount_too_low"),
 	INVALID_NUMBER("invalid_number"),
 	INVALID_EXPIRY_MONTH("invalid_expiry_month"),
 	INVALID_EXPIRY_YEAR("invalid_expiry_year"),
@@ -26,6 +27,8 @@ public enum ErrorCode {
 	DO_NOT_TRY_AGAIN("do_not_try_again"),
 	CURRENCY_NOT_SUPPORTED("currency_not_supported"),
 	BRAND_NOT_SUPPORTED("brand_not_supported"),
+	PAYMENT_METHOD_DECLINED("payment_method_declined"),
+	INVALID_ACCOUNT("invalid_account"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.
