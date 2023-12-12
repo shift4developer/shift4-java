@@ -7,6 +7,7 @@ public enum CardType {
 
 	CREDIT_CARD("Credit Card"),
 	DEBIT_CARD("Debit Card"),
+	PREPAID_CARD("Prepaid Card"),
 	UNKNOWN("Unknown"),
 
 	/**
