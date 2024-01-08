@@ -2,15 +2,11 @@ package com.shift4;
 
 import com.shift4.connection.Connection;
 import com.shift4.connection.HttpClientConnection;
-import com.shift4.connection.Response;
 import com.shift4.enums.FileUploadPurpose;
-import com.shift4.exception.Shift4Exception;
 import com.shift4.exception.SignException;
 import com.shift4.request.*;
 import com.shift4.response.*;
-import com.shift4.util.Base64;
 import com.shift4.util.ObjectSerializer;
-import com.shift4.util.Shift4Utils;
 
 import javax.crypto.Mac;
 import javax.crypto.spec.SecretKeySpec;
@@ -46,12 +42,8 @@ public class Shift4Gateway implements Closeable {
     private static final String REFUND_PATH = "/refunds";
 
     private final ObjectSerializer objectSerializer = ObjectSerializer.INSTANCE;
-
-    private Connection connection;
-
-    private String secretKey;
-    private String endpoint = DEFAULT_ENDPOINT;
-    private String uploadsEndpoint = UPLOADS_ENDPOINT;
+    private final ConnectionClient gatewayClient;
+    private final ConnectionClient gatewayUploadsClient;
 
     public Shift4Gateway() {
         this(null);
@@ -62,8 +54,8 @@ public class Shift4Gateway implements Closeable {
     }
 
     public Shift4Gateway(String secretKey, Connection connection) {
-        this.secretKey = secretKey;
-        this.connection = connection;
+        this.gatewayClient = new ConnectionClient(connection, secretKey, DEFAULT_ENDPOINT);
+        this.gatewayUploadsClient = new ConnectionClient(connection, secretKey, UPLOADS_ENDPOINT);
     }
 
     public Charge createCharge(ChargeRequest request) {
@@ -269,7 +261,7 @@ public class Shift4Gateway implements Closeable {
             String algorithm = "HmacSHA256";
 
             Mac hmac = Mac.getInstance(algorithm);
-            hmac.init(new SecretKeySpec(secretKey.getBytes(UTF_8), algorithm));
+            hmac.init(new SecretKeySpec(gatewayClient.getSecretKey().getBytes(UTF_8), algorithm));
             String signature = encodeHexString(hmac.doFinal(data.getBytes(UTF_8)));
 
             return encodeBase64String((signature + "|" + data).getBytes(UTF_8));
@@ -285,19 +277,19 @@ public class Shift4Gateway implements Closeable {
         Map<String, String> form = new HashMap<>();
         form.put("purpose", purpose.getValue());
 
-        return multipart(FILES_PATH, files, form, FileUpload.class);
+        return uploadsMultipart(FILES_PATH, files, form, FileUpload.class);
     }
 
     public FileUpload retrieveFileUpload(String id) {
-        return get(uploadsEndpoint, FILES_PATH + "/" + id, FileUpload.class);
+        return uploadsGet(FILES_PATH + "/" + id, FileUpload.class);
     }
 
     public ListResponse<FileUpload> listFileUploads() {
-        return list(uploadsEndpoint, FILES_PATH, null, FileUpload.class);
+        return uploadslist(FILES_PATH, null, FileUpload.class);
     }
 
     public ListResponse<FileUpload> listFileUploads(FileUploadListRequest request) {
-        return list(uploadsEndpoint, FILES_PATH, request, FileUpload.class);
+        return uploadslist(FILES_PATH, request, FileUpload.class);
     }
 
     public Dispute retrieveDispute(String id) {
@@ -378,109 +370,70 @@ public class Shift4Gateway implements Closeable {
 
     @Override
     public void close() throws IOException {
-        if (connection != null) {
-            connection.close();
-        }
+        gatewayClient.close();
+        gatewayUploadsClient.close();
     }
 
     protected <T> T get(String path, Class<T> responseClass) {
-        return get(endpoint, path, responseClass);
+        return gatewayClient.get(path, responseClass);
     }
 
     protected <T> T get(String path, Class<T> responseClass, Expand expand) {
-        return get(endpoint, path, responseClass, expand);
+        return gatewayClient.get(path,responseClass, expand);
     }
 
-    protected <T> T get(String endpoint, String path, Class<T> responseClass) {
-        return get(endpoint, path, responseClass, null);
-    }
-
-    protected <T> T get(String endpoint, String path, Class<T> responseClass, Expand expand) {
-        RetrieveRequest request = new RetrieveRequest().expand(expand);
-        String url = buildQueryString(endpoint + path, request);
-        Response response = connection.get(url, buildHeaders());
-        ensureSuccess(response);
-        return objectSerializer.deserialize(response.getBody(), responseClass);
+    protected <T> T uploadsGet(String path, Class<T> responseClass) {
+        return gatewayUploadsClient.get(path, responseClass);
     }
 
     protected <T> T post(String path, Object request, Class<T> responseClass) {
-        String requestBody = objectSerializer.serialize(request);
-        Response response = connection.post(endpoint + path, requestBody, buildHeaders());
-        ensureSuccess(response);
-        return objectSerializer.deserialize(response.getBody(), responseClass);
+        return gatewayClient.post(path, request, responseClass);
     }
 
-    protected <T> T multipart(String path, Map<String, File> files, Map<String, String> form, Class<T> responseClass) {
-        Response response = connection.multipart(uploadsEndpoint + path, files, form, buildHeaders());
-        ensureSuccess(response);
-        return objectSerializer.deserialize(response.getBody(), responseClass);
+    protected <T> T uploadsMultipart(String path, Map<String, File> files, Map<String, String> form, Class<T> responseClass) {
+        return gatewayUploadsClient.multipart(path, files, form, responseClass);
     }
 
     protected <T> ListResponse<T> list(String path, Class<T> elementClass) {
-        return list(endpoint, path, null, elementClass);
+        return gatewayClient.list(path, elementClass);
     }
 
     protected <T> ListResponse<T> list(String path, Object request, Class<T> elementClass) {
-        return list(endpoint, path, request, elementClass);
+        return gatewayClient.list(path, request, elementClass);
     }
 
-    protected <T> ListResponse<T> list(String endpoint, String path, Object request, Class<T> elementClass) {
-        String url = buildQueryString(endpoint + path, request);
-        Response response = connection.get(url, buildHeaders());
-        ensureSuccess(response);
-        return objectSerializer.deserializeList(response.getBody(), elementClass);
+    protected <T> ListResponse<T> uploadslist(String path, Object request, Class<T> elementClass) {
+        return gatewayUploadsClient.list(path, request, elementClass);
     }
 
     protected <T> T delete(String path, Class<T> responseClass) {
-        return delete(path, null, responseClass);
+        return gatewayClient.delete(path, responseClass);
     }
 
     protected <T> T delete(String path, Object request, Class<T> responseClass) {
-        String url = buildQueryString(endpoint + path, request);
-        Response response = connection.delete(url, buildHeaders());
-        ensureSuccess(response);
-        return objectSerializer.deserialize(response.getBody(), responseClass);
-    }
-
-    private void ensureSuccess(Response response) {
-        if (response.getStatus() != 200) {
-            ErrorResponse error = objectSerializer.deserialize(response.getBody(), ErrorResponse.class);
-            throw new Shift4Exception(error);
-        }
-    }
-
-    private String buildQueryString(String url, Object request) {
-        if (request == null) {
-            return url;
-        }
-
-        return url + objectSerializer.serializeToQueryString(request);
-    }
-
-    protected Map<String, String> buildHeaders() {
-        Map<String, String> headers = new HashMap<>();
-
-        headers.put("Authorization", "Basic " + Base64.encode((secretKey + ":").getBytes()));
-        headers.put("Content-Type", "application/json");
-        headers.put("User-Agent", "Shift4-Java/" + Shift4Utils.getBuildVersion()
-                + " (Java/" + Shift4Utils.getJavaVersion() + ")");
-
-        return headers;
+        return gatewayClient.delete(path, request, responseClass);
     }
 
     public void setSecretKey(String secretKey) {
-        this.secretKey = secretKey;
+        this.gatewayClient.setSecretKey(secretKey);
+        this.gatewayUploadsClient.setSecretKey(secretKey);
     }
 
     public void setConnection(Connection connection) {
-        this.connection = connection;
+        this.gatewayClient.setConnection(connection);
+        this.gatewayUploadsClient.setConnection(connection);
     }
 
     public void setEndpoint(String endpoint) {
-        this.endpoint = endpoint;
+        this.gatewayClient.setEndpoint(endpoint);
     }
 
     public void setUploadsEndpoint(String uploadsEndpoint) {
-        this.uploadsEndpoint = uploadsEndpoint;
+        this.gatewayUploadsClient.setEndpoint(uploadsEndpoint);
+    }
+
+    public void setHeadersFactory(Shift4GatewayHeadersFactory headersFactory) {
+        this.gatewayClient.setHeadersFactory(headersFactory);
+        this.gatewayUploadsClient.setHeadersFactory(headersFactory);
     }
 }
