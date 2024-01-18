@@ -332,6 +332,10 @@ public class Shift4Gateway implements Closeable {
         return post(REFUND_PATH, request, Refund.class);
     }
 
+    public Refund updateRefund(RefundUpdateRequest request) {
+        return post(REFUND_PATH + "/" + request.getRefundId(), request, Refund.class);
+    }
+
     public ListResponse<Refund> listRefunds(String chargeId) {
         RefundListRequest request = new RefundListRequest();
         request.chargeId(chargeId);
