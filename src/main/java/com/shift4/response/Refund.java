@@ -18,6 +18,7 @@ public class Refund {
     private String charge;
     private String reason;
     private String status;
+    private Map<String, String> metadata;
 
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
@@ -56,6 +57,10 @@ public class Refund {
 
     public String getStatusAsString() {
         return status;
+    }
+
+    public Map<String, String> getMetadata() {
+        return metadata;
     }
 
     public String get(String name) {
