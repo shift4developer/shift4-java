@@ -13,12 +13,14 @@ import java.util.Map;
 
 @JsonInclude(Include.NON_NULL)
 public class RefundRequest {
-    
+
 	private String chargeId;
 
 	private Integer amount;
 
 	private RefundReason reason;
+
+	private Map<String, String> metadata;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -46,6 +48,10 @@ public class RefundRequest {
 		return reason;
 	}
 
+	public Map<String, String> getMetadata() {
+		return metadata;
+	}
+
 	public RefundRequest chargeId(String chargeId) {
 		this.chargeId = chargeId;
 		return this;
@@ -62,6 +68,11 @@ public class RefundRequest {
 
 	public RefundRequest reason(RefundReason reason) {
 		this.reason = reason;
+		return this;
+	}
+
+	public RefundRequest metadata(Map<String, String> metadata) {
+		this.metadata = metadata;
 		return this;
 	}
 
