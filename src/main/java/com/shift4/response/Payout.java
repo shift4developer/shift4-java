@@ -14,6 +14,7 @@ public class Payout {
     private String currency;
     private Long periodStart;
     private Long periodEnd;
+    private String merchantAccountId;
 
     @JsonIgnore
     private Map<String, Object> other = new HashMap<>();
@@ -40,6 +41,10 @@ public class Payout {
 
     public Long getPeriodEnd() {
         return periodEnd;
+    }
+
+    public String getMerchantAccountId() {
+        return merchantAccountId;
     }
 
     public String get(String name) {
