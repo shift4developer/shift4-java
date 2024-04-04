@@ -25,6 +25,7 @@ public class EventDataDeserializer extends JsonDeserializer<Object> {
         OBJECT_TYPES.put("subscription", Subscription.class);
         OBJECT_TYPES.put("payout", Payout.class);
         OBJECT_TYPES.put("paymentMethod", PaymentMethod.class);
+        OBJECT_TYPES.put("refund", Refund.class);
     }
 
     private final ObjectSerializer objectSerializer = ObjectSerializer.INSTANCE;
