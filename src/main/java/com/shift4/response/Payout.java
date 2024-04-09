@@ -10,7 +10,7 @@ import java.util.Map;
 public class Payout {
     private String id;
     private Long created;
-    private Integer amount;
+    private Long amount;
     private String currency;
     private Long periodStart;
     private Long periodEnd;
@@ -27,7 +27,7 @@ public class Payout {
         return created;
     }
 
-    public Integer getAmount() {
+    public Long getAmount() {
         return amount;
     }
 
