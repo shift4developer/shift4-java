@@ -5,11 +5,14 @@ import com.shift4.enums.ErrorType;
 import com.shift4.exception.Shift4Exception;
 import com.shift4.request.ChargeListRequest;
 import com.shift4.request.ChargeRequest;
+import com.shift4.request.RequestOptions;
 import com.shift4.response.Charge;
 import com.shift4.response.Customer;
 import com.shift4.response.ListResponse;
 import com.shift4.utils.ListResponseUtils;
 import org.junit.jupiter.api.Test;
+
+import java.util.UUID;
 
 import static com.shift4.enums.ErrorCode.INCORRECT_CVC;
 import static com.shift4.testdata.Cards.incorrectCvcCard;
@@ -98,6 +101,25 @@ class ChargesTest extends AbstractShift4GatewayTest {
         assertThat(page2.getHasMore()).isTrue();
         assertThat(page3).extracting(Charge::getId).containsExactly(charge2, charge1);
         assertThat(page3.getHasMore()).isFalse();
+    }
+
+    @Test
+    void shouldCreateChargeOnceWhenIdempotencyKeyIsUsed() {
+        // given
+        ChargeRequest request = charge().card(successCard());
+        String idempotencyKey = UUID.randomUUID().toString();
+        RequestOptions requestOptions = RequestOptions.withIdempotencyKey(idempotencyKey);
+        // when
+        Charge charge = gateway.createCharge(request, requestOptions);
+        // then
+        assertThat(charge.getStatus()).isEqualTo(ChargeStatus.SUCCESSFUL);
+        assertThat(charge.getAmount()).isEqualTo(request.getAmount());
+        assertThat(charge.getCurrency()).isEqualTo(request.getCurrency());
+        assertThat(charge.getFailureCode()).isNull();
+        // and when another call with same idempotency key
+        Charge second = gateway.createCharge(request, requestOptions);
+        // then
+        assertThat(second.getId()).isEqualTo(charge.getId());
     }
 
 }
