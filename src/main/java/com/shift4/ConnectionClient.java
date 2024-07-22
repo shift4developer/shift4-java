@@ -4,6 +4,7 @@ import com.shift4.connection.Connection;
 import com.shift4.connection.Response;
 import com.shift4.exception.Shift4Exception;
 import com.shift4.request.Expand;
+import com.shift4.request.RequestOptions;
 import com.shift4.request.RetrieveRequest;
 import com.shift4.response.ErrorResponse;
 import com.shift4.response.ListResponse;
@@ -42,6 +43,13 @@ class ConnectionClient {
     <T> T post(String path, Object request, Class<T> responseClass) {
         String requestBody = objectSerializer.serialize(request);
         Response response = connection.post(endpoint + path, requestBody, buildHeaders());
+        ensureSuccess(response);
+        return objectSerializer.deserialize(response.getBody(), responseClass);
+    }
+
+    public <T> T post(String path, Object request, RequestOptions options, Class<T> responseClass) {
+        String requestBody = objectSerializer.serialize(request);
+        Response response = connection.post(endpoint + path, requestBody, buildHeaders(options));
         ensureSuccess(response);
         return objectSerializer.deserialize(response.getBody(), responseClass);
     }
@@ -91,6 +99,10 @@ class ConnectionClient {
 
     protected Map<String, String> buildHeaders() {
         return headersFactory.create(secretKey);
+    }
+
+    protected Map<String, String> buildHeaders(RequestOptions requestOptions) {
+        return headersFactory.create(secretKey, requestOptions);
     }
 
     public String getSecretKey() {

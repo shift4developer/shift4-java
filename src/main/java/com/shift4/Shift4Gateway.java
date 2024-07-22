@@ -62,8 +62,16 @@ public class Shift4Gateway implements Closeable {
         return post(CHARGES_PATH, request, Charge.class);
     }
 
+    public Charge createCharge(ChargeRequest request, RequestOptions requestOptions) {
+        return post(CHARGES_PATH, request, requestOptions, Charge.class);
+    }
+
     public Charge captureCharge(CaptureRequest request) {
         return post(CHARGES_PATH + "/" + request.getChargeId() + "/capture", request, Charge.class);
+    }
+
+    public Charge captureCharge(CaptureRequest request, RequestOptions requestOptions) {
+        return post(CHARGES_PATH + "/" + request.getChargeId() + "/capture", request, requestOptions, Charge.class);
     }
 
     public Charge retrieveCharge(String chargeId) {
@@ -72,6 +80,10 @@ public class Shift4Gateway implements Closeable {
 
     public Charge updateCharge(ChargeUpdateRequest request) {
         return post(CHARGES_PATH + "/" + request.getChargeId(), request, Charge.class);
+    }
+
+    public Charge updateCharge(ChargeUpdateRequest request, RequestOptions requestOptions) {
+        return post(CHARGES_PATH + "/" + request.getChargeId(), request, requestOptions, Charge.class);
     }
 
     public ListResponse<Charge> listCharges() {
@@ -86,12 +98,20 @@ public class Shift4Gateway implements Closeable {
         return post(CUSTOMERS_PATH, request, Customer.class);
     }
 
+    public Customer createCustomer(CustomerRequest request, RequestOptions requestOptions) {
+        return post(CUSTOMERS_PATH, request, requestOptions, Customer.class);
+    }
+
     public Customer retrieveCustomer(String customerId) {
         return get(CUSTOMERS_PATH + "/" + customerId, Customer.class);
     }
 
     public Customer updateCustomer(CustomerUpdateRequest request) {
         return post(CUSTOMERS_PATH + "/" + request.getCustomerId(), request, Customer.class);
+    }
+
+    public Customer updateCustomer(CustomerUpdateRequest request, RequestOptions requestOptions) {
+        return post(CUSTOMERS_PATH + "/" + request.getCustomerId(), request, requestOptions, Customer.class);
     }
 
     public DeleteResponse deleteCustomer(String customerId) {
@@ -110,12 +130,20 @@ public class Shift4Gateway implements Closeable {
         return post(format(CARDS_PATH, request.getCustomerId()), request, Card.class);
     }
 
+    public Card createCard(CardRequest request, RequestOptions requestOptions) {
+        return post(format(CARDS_PATH, request.getCustomerId()), request, requestOptions, Card.class);
+    }
+
     public Card retrieveCard(String customerId, String cardId) {
         return get(format(CARDS_PATH, customerId) + "/" + cardId, Card.class);
     }
 
     public Card updateCard(CardUpdateRequest card) {
         return post(format(CARDS_PATH, card.getCustomerId()) + "/" + card.getCardId(), card, Card.class);
+    }
+
+    public Card updateCard(CardUpdateRequest card, RequestOptions requestOptions) {
+        return post(format(CARDS_PATH, card.getCustomerId()) + "/" + card.getCardId(), card, requestOptions, Card.class);
     }
 
     public DeleteResponse deleteCard(String customerId, String cardId) {
@@ -134,6 +162,10 @@ public class Shift4Gateway implements Closeable {
         return post(PAYMENT_METHOD_PATH, request, PaymentMethod.class);
     }
 
+    public PaymentMethod createPaymentMethod(PaymentMethodRequest request, RequestOptions requestOptions) {
+        return post(PAYMENT_METHOD_PATH, request, requestOptions, PaymentMethod.class);
+    }
+
     public PaymentMethod retrievePaymentMethod(String paymentMethodId) {
         return get(PAYMENT_METHOD_PATH + "/" + paymentMethodId, PaymentMethod.class);
     }
@@ -150,12 +182,20 @@ public class Shift4Gateway implements Closeable {
         return post(SUBSCRIPTIONS_PATH, request, Subscription.class);
     }
 
+    public Subscription createSubscription(SubscriptionRequest request, RequestOptions requestOptions) {
+        return post(SUBSCRIPTIONS_PATH, request, requestOptions, Subscription.class);
+    }
+
     public Subscription retrieveSubscription(String subscriptionId) {
         return get(SUBSCRIPTIONS_PATH + "/" + subscriptionId, Subscription.class);
     }
 
     public Subscription updateSubscription(SubscriptionUpdateRequest request) {
         return post(SUBSCRIPTIONS_PATH + "/" + request.getSubscriptionId(), request, Subscription.class);
+    }
+
+    public Subscription updateSubscription(SubscriptionUpdateRequest request, RequestOptions requestOptions) {
+        return post(SUBSCRIPTIONS_PATH + "/" + request.getSubscriptionId(), request, requestOptions, Subscription.class);
     }
 
     public Subscription cancelSubscription(SubscriptionCancelRequest request) {
@@ -174,12 +214,20 @@ public class Shift4Gateway implements Closeable {
         return post(PLANS_PATH, request, Plan.class);
     }
 
+    public Plan createPlan(PlanRequest request, RequestOptions requestOptions) {
+        return post(PLANS_PATH, request, requestOptions, Plan.class);
+    }
+
     public Plan retrievePlan(String planId) {
         return get(PLANS_PATH + "/" + planId, Plan.class);
     }
 
     public Plan updatePlan(PlanUpdateRequest request) {
         return post(PLANS_PATH + "/" + request.getPlanId(), request, Plan.class);
+    }
+
+    public Plan updatePlan(PlanUpdateRequest request, RequestOptions requestOptions) {
+        return post(PLANS_PATH + "/" + request.getPlanId(), request, requestOptions, Plan.class);
     }
 
     public DeleteResponse deletePlan(String planId) {
@@ -210,12 +258,20 @@ public class Shift4Gateway implements Closeable {
         return post(TOKENS_PATH, request, Token.class);
     }
 
+    public Token createToken(TokenRequest request, RequestOptions requestOptions) {
+        return post(TOKENS_PATH, request, requestOptions, Token.class);
+    }
+
     public Token retrieveToken(String tokenId) {
         return get(TOKENS_PATH + "/" + tokenId, Token.class);
     }
 
     public BlacklistRule createBlacklistRule(BlacklistRuleRequest request) {
         return post(BLACKLIST_RULE_PATH, request, BlacklistRule.class);
+    }
+
+    public BlacklistRule createBlacklistRule(BlacklistRuleRequest request, RequestOptions requestOptions) {
+        return post(BLACKLIST_RULE_PATH, request, requestOptions, BlacklistRule.class);
     }
 
     public BlacklistRule retrieveBlacklistRule(String blacklistRuleId) {
@@ -238,12 +294,20 @@ public class Shift4Gateway implements Closeable {
         return post(CREDIT_PATH, request, Credit.class);
     }
 
+    public Credit createCredit(CreditRequest request, RequestOptions requestOptions) {
+        return post(CREDIT_PATH, request, requestOptions, Credit.class);
+    }
+
     public Credit retrieveCredit(String creditId) {
         return get(CREDIT_PATH + "/" + creditId, Credit.class);
     }
 
     public Credit updateCredit(CreditUpdateRequest credit) {
         return post(CREDIT_PATH + "/" + credit.getCreditId(), credit, Credit.class);
+    }
+
+    public Credit updateCredit(CreditUpdateRequest credit, RequestOptions requestOptions) {
+        return post(CREDIT_PATH + "/" + credit.getCreditId(), credit, requestOptions, Credit.class);
     }
 
     public ListResponse<Credit> listCredits() {
@@ -300,6 +364,10 @@ public class Shift4Gateway implements Closeable {
         return post(DISPUTES_PATH + "/" + request.getDisputeId(), request, Dispute.class);
     }
 
+    public Dispute updateDispute(DisputeUpdateRequest request, RequestOptions requestOptions) {
+        return post(DISPUTES_PATH + "/" + request.getDisputeId(), request, requestOptions, Dispute.class);
+    }
+
     public Dispute closeDispute(String id) {
         return post(DISPUTES_PATH + "/" + id + "/close", null, Dispute.class);
     }
@@ -332,8 +400,16 @@ public class Shift4Gateway implements Closeable {
         return post(REFUND_PATH, request, Refund.class);
     }
 
+    public Refund createRefund(RefundRequest request, RequestOptions requestOptions) {
+        return post(REFUND_PATH, request, requestOptions, Refund.class);
+    }
+
     public Refund updateRefund(RefundUpdateRequest request) {
         return post(REFUND_PATH + "/" + request.getRefundId(), request, Refund.class);
+    }
+
+    public Refund updateRefund(RefundUpdateRequest request, RequestOptions requestOptions) {
+        return post(REFUND_PATH + "/" + request.getRefundId(), request, requestOptions, Refund.class);
     }
 
     public ListResponse<Refund> listRefunds(String chargeId) {
@@ -383,7 +459,7 @@ public class Shift4Gateway implements Closeable {
     }
 
     protected <T> T get(String path, Class<T> responseClass, Expand expand) {
-        return gatewayClient.get(path,responseClass, expand);
+        return gatewayClient.get(path, responseClass, expand);
     }
 
     protected <T> T uploadsGet(String path, Class<T> responseClass) {
@@ -392,6 +468,10 @@ public class Shift4Gateway implements Closeable {
 
     protected <T> T post(String path, Object request, Class<T> responseClass) {
         return gatewayClient.post(path, request, responseClass);
+    }
+
+    protected <T> T post(String path, Object request, RequestOptions options, Class<T> responseClass) {
+        return gatewayClient.post(path, request, options, responseClass);
     }
 
     protected <T> T uploadsMultipart(String path, Map<String, File> files, Map<String, String> form, Class<T> responseClass) {
