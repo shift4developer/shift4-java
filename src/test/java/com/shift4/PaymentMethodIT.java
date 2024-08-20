@@ -32,4 +32,53 @@ public class PaymentMethodIT extends AbstractShift4GatewayTest{
         assertThat(applePay.getLast4()).isNotNull();
 
     }
+
+    @Test
+    void shouldCreateGooglePayPaymentMethod() {
+        // when
+        PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.GOOGLE_PAY)
+            .googlePay(new PaymentMethodRequest.GooglePay("PAN_ONLY")));
+
+        // then
+        assertThat(paymentMethod).isNotNull();
+        assertThat(paymentMethod.getId()).isNotNull();
+        assertThat(paymentMethod.getType()).isEqualTo(PaymentMethodType.GOOGLE_PAY);
+        PaymentMethod.GooglePay googlePay = paymentMethod.getGooglePay();
+        assertThat(googlePay).isNotNull();
+        assertThat(googlePay.getCardBrand()).isNotNull();
+        assertThat(googlePay.getCardType()).isNotNull();
+        assertThat(googlePay.getFirst6()).isNotNull();
+        assertThat(googlePay.getLast4()).isNotNull();
+        assertThat(paymentMethod.getFlow()).isNotNull();
+        assertThat(paymentMethod.getFlow().getNextAction()).isNotNull();
+    }
+
+    @Test
+    void shouldCreateGooglePayWithThreeDSecurePaymentMethod() {
+        // when
+        PaymentMethod source = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.GOOGLE_PAY)
+            .googlePay(new PaymentMethodRequest.GooglePay("CRYPTOGRAM_3DS")));
+        PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.THREE_D_SECURE)
+            .source(source.getId())
+                .googlePay(new PaymentMethodRequest.GooglePay("CRYPTOGRAM_3DS"))
+            .threeDSecure(new PaymentMethodRequest.ThreeDSecure()
+                .currency("USD")
+                .amount(60))
+        );
+
+        // then
+        assertThat(paymentMethod).isNotNull();
+        assertThat(paymentMethod.getId()).isNotNull();
+        assertThat(paymentMethod.getType()).isEqualTo(PaymentMethodType.THREE_D_SECURE);
+
+        assertThat(paymentMethod.getThreeDSecure()).isNotNull();
+        assertThat(paymentMethod.getThreeDSecure().getAmount()).isEqualTo(60);
+        assertThat(paymentMethod.getThreeDSecure().getCurrency()).isEqualTo("USD");
+
+        assertThat(paymentMethod.getSource()).isNotNull();
+        assertThat(paymentMethod.getSource().getId()).isEqualTo(source.getId());
+
+        assertThat(paymentMethod.getFlow()).isNotNull();
+        assertThat(paymentMethod.getFlow().getNextAction()).isNotNull();
+    }
 }

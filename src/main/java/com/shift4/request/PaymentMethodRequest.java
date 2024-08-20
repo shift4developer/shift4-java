@@ -17,6 +17,9 @@ public class PaymentMethodRequest {
 	private PaymentMethodType type;
 	private BillingRequest billing;
 	private ApplePay applePay;
+	private ThreeDSecure threeDSecure;
+	private GooglePay googlePay;
+	private String source;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -52,6 +55,18 @@ public class PaymentMethodRequest {
 		return applePay;
 	}
 
+	public ThreeDSecure getThreeDSecure() {
+		return threeDSecure;
+	}
+
+	public GooglePay getGooglePay() {
+		return googlePay;
+	}
+
+	public String getSource() {
+		return source;
+	}
+
 	public PaymentMethodRequest id(String id) {
 		this.id = id;
 		return this;
@@ -80,6 +95,23 @@ public class PaymentMethodRequest {
 		this.applePay = applePay;
 		return this;
 	}
+
+	public PaymentMethodRequest threeDSecure(ThreeDSecure threeDSecure) {
+		this.threeDSecure = threeDSecure;
+		return this;
+	}
+
+	public PaymentMethodRequest googlePay(GooglePay googlePay) {
+		this.googlePay = googlePay;
+		return this;
+	}
+
+	public PaymentMethodRequest source(String source) {
+		this.source = source;
+		return this;
+	}
+
+
 
 	@JsonAnyGetter
 	private Map<String, Object> getOtherMap() {
@@ -122,4 +154,81 @@ public class PaymentMethodRequest {
 			return this;
 		}
 	}
+
+	public static class ThreeDSecure {
+		private String currency;
+		private Integer amount;
+
+
+		public ThreeDSecure(String currency, Integer amount) {
+			this.currency = currency;
+			this.amount = amount;
+		}
+
+		public ThreeDSecure() {
+		}
+
+		public ThreeDSecure currency(String currency) {
+			this.currency = currency;
+			return this;
+		}
+
+		public ThreeDSecure amount(Integer amount) {
+			this.amount = amount;
+			return this;
+		}
+
+		@JsonIgnore
+		private final Map<String, Object> other = new HashMap<>();
+
+		@JsonAnyGetter
+		private Map<String, Object> getOtherMap() {
+			return other;
+		}
+
+		@JsonAnySetter
+		public ThreeDSecure set(String name, Object value) {
+			other.put(name, value);
+			return this;
+		}
+	}
+
+	public static class GooglePay {
+		private String token;
+
+		public GooglePay(String token) {
+			this.token = token;
+		}
+
+		public GooglePay() {
+		}
+
+		public GooglePay token(String token) {
+			this.token = token;
+			return this;
+		}
+
+		public String getToken() {
+			return token;
+		}
+
+		@JsonIgnore
+		private final Map<String, Object> other = new HashMap<>();
+
+
+		@JsonAnyGetter
+		private Map<String, Object> getOtherMap() {
+			return other;
+		}
+
+		@JsonAnySetter
+		public GooglePay set(String name, Object value) {
+			other.put(name, value);
+			return this;
+		}
+
+	}
+
+
+
 }

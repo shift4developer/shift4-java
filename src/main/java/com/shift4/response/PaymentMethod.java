@@ -2,10 +2,7 @@ package com.shift4.response;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.shift4.enums.CardBrand;
-import com.shift4.enums.CardType;
-import com.shift4.enums.PaymentMethodStatus;
-import com.shift4.enums.PaymentMethodType;
+import com.shift4.enums.*;
 import com.shift4.util.Shift4Utils;
 
 import java.util.HashMap;
@@ -22,6 +19,10 @@ public class PaymentMethod {
     private Billing billing;
     private FraudCheckData fraudCheckData;
     private ApplePay applePay;
+    private ThreeDSecure threeDSecure;
+    private GooglePay googlePay;
+    private PaymentMethod source;
+    private PaymentMethodFlow flow;
 
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
@@ -74,6 +75,22 @@ public class PaymentMethod {
         return applePay;
     }
 
+    public ThreeDSecure getThreeDSecure() {
+        return threeDSecure;
+    }
+
+    public GooglePay getGooglePay() {
+        return googlePay;
+    }
+
+    public PaymentMethod getSource() {
+        return source;
+    }
+
+    public PaymentMethodFlow getFlow() {
+        return flow;
+    }
+
     public String get(String name) {
         return Shift4Utils.toStringNullSafe(other.get(name));
     }
@@ -124,6 +141,95 @@ public class PaymentMethod {
 
         public String getCurrency() {
             return currency;
+        }
+
+        public String get(String name) {
+            return Shift4Utils.toStringNullSafe(other.get(name));
+        }
+
+        @JsonAnySetter
+        private void set(String name, Object value) {
+            other.put(name, value);
+        }
+    }
+
+    public static class ThreeDSecure {
+        private String currency;
+        private Integer amount;
+
+        @JsonIgnore
+        private final Map<String, Object> other = new HashMap<>();
+
+        public String getCurrency() {
+            return currency;
+        }
+
+        public Integer getAmount() {
+            return amount;
+        }
+
+        public String get(String name) {
+            return Shift4Utils.toStringNullSafe(other.get(name));
+        }
+
+        @JsonAnySetter
+        private void set(String name, Object value) {
+            other.put(name, value);
+        }
+    }
+
+
+    public static class GooglePay {
+        private String cardBrand;
+        private String cardType;
+        private String first6;
+        private String last4;
+
+        @JsonIgnore
+        private final Map<String, Object> other = new HashMap<>();
+
+        public CardBrand getCardBrand() {
+            return CardBrand.fromValue(cardBrand);
+        }
+
+        public String getCardBrandAsString() {
+            return cardBrand;
+        }
+
+        public CardType getCardType() {
+            return CardType.fromValue(cardType);
+        }
+
+        public String getCardTypeAsString() {
+            return cardType;
+        }
+
+        public String getFirst6() {
+            return first6;
+        }
+
+        public String getLast4() {
+            return last4;
+        }
+
+        public String get(String name) {
+            return Shift4Utils.toStringNullSafe(other.get(name));
+        }
+
+        @JsonAnySetter
+        private void set(String name, Object value) {
+            other.put(name, value);
+        }
+    }
+
+    public static class PaymentMethodFlow {
+        private FlowNextAction nextAction;
+
+        @JsonIgnore
+        private final Map<String, Object> other = new HashMap<>();
+
+        public FlowNextAction getNextAction() {
+            return nextAction;
         }
 
         public String get(String name) {
