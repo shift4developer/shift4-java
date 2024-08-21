@@ -223,13 +223,17 @@ public class PaymentMethod {
     }
 
     public static class PaymentMethodFlow {
-        private FlowNextAction nextAction;
+        private String nextAction;
 
         @JsonIgnore
         private final Map<String, Object> other = new HashMap<>();
 
-        public FlowNextAction getNextAction() {
+        public String getNextActionAsString() {
             return nextAction;
+        }
+
+        public FlowNextAction getNextAction() {
+            return FlowNextAction.fromValue(nextAction);
         }
 
         public String get(String name) {
