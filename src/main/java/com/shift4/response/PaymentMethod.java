@@ -232,8 +232,8 @@ public class PaymentMethod {
             return nextAction;
         }
 
-        public FlowNextAction getNextAction() {
-            return FlowNextAction.fromValue(nextAction);
+        public PaymentMethodFlowActionType getNextAction() {
+            return PaymentMethodFlowActionType.fromValue(nextAction);
         }
 
         public String get(String name) {
