@@ -31,6 +31,8 @@ public enum PaymentMethodType {
 	UNIONPAY("unionpay"),
 	VERKKOPANKKI("verkkopankki"),
 	WECHATPAY("wechatpay"),
+	GOOGLE_PAY("google_pay"),
+	THREE_D_SECURE("three_d_secure"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.
