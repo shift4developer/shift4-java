@@ -1,6 +1,7 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum CardType {
@@ -22,7 +23,7 @@ public enum CardType {
 	}
 
 	@JsonCreator
-	public static CardType fromValue(String value) {
+	public static CardType fromValue(@JsonProperty("value") String value) {
 		if (value == null) {
 			return null;
 		}

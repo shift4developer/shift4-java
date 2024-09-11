@@ -1,6 +1,7 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum Interval {
@@ -23,7 +24,7 @@ public enum Interval {
 	}
 
 	@JsonCreator
-	public static Interval fromValue(String value) {
+	public static Interval fromValue(@JsonProperty("value") String value) {
 		if (value == null) {
 			return null;
 		}

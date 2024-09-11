@@ -1,6 +1,7 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum EventType {
@@ -61,7 +62,7 @@ public enum EventType {
 	}
 
 	@JsonCreator
-	public static EventType fromValue(String value) {
+	public static EventType fromValue(@JsonProperty("value") String value) {
 		if (value == null) {
 			return null;
 		}

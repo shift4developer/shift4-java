@@ -1,6 +1,7 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ErrorCode {
@@ -42,7 +43,7 @@ public enum ErrorCode {
 	}
 
 	@JsonCreator
-	public static ErrorCode fromValue(String value) {
+	public static ErrorCode fromValue(@JsonProperty("value") String value) {
 		if (value == null) {
 			return null;
 		}

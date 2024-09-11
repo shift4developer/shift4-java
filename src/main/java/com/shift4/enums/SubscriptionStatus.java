@@ -1,6 +1,7 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum SubscriptionStatus {
@@ -24,7 +25,7 @@ public enum SubscriptionStatus {
 	}
 
 	@JsonCreator
-	public static SubscriptionStatus fromValue(String value) {
+	public static SubscriptionStatus fromValue(@JsonProperty("value") String value) {
 		if (value == null) {
 			return null;
 		}

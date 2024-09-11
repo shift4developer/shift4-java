@@ -1,6 +1,7 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum RefundReason {
@@ -19,7 +20,7 @@ public enum RefundReason {
 	}
 
 	@JsonCreator
-	public static RefundReason fromValue(String value) {
+	public static RefundReason fromValue(@JsonProperty("value") String value) {
 		if (value == null) {
 			return null;
 		}

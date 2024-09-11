@@ -1,6 +1,7 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ChargeFlowActionType {
@@ -17,7 +18,7 @@ public enum ChargeFlowActionType {
     }
 
     @JsonCreator
-    public static ChargeFlowActionType fromValue(String value) {
+    public static ChargeFlowActionType fromValue(@JsonProperty("value") String value) {
         if (value == null) {
             return null;
         }
