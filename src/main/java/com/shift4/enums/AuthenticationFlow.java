@@ -1,7 +1,6 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum AuthenticationFlow {
@@ -20,8 +19,8 @@ public enum AuthenticationFlow {
         this.value = value;
     }
 
-    @JsonCreator
-    public static AuthenticationFlow fromValue(@JsonProperty("value") String value) {
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static AuthenticationFlow fromValue(String value) {
         if (value == null) {
             return null;
         }

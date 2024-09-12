@@ -1,7 +1,6 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum FileUploadPurpose {
@@ -19,8 +18,8 @@ public enum FileUploadPurpose {
 		this.value = value;
 	}
 
-	@JsonCreator
-	public static FileUploadPurpose fromValue(@JsonProperty("value") String value) {
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+	public static FileUploadPurpose fromValue(String value) {
 		if (value == null) {
 			return null;
 		}

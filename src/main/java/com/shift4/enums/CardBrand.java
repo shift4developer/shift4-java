@@ -1,7 +1,6 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum CardBrand {
@@ -26,8 +25,8 @@ public enum CardBrand {
 		this.value = value;
 	}
 
-	@JsonCreator
-	public static CardBrand fromValue(@JsonProperty("value") String value) {
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+	public static CardBrand fromValue(String value) {
 		if (value == null) {
 			return null;
 		}

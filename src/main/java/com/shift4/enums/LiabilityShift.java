@@ -1,7 +1,6 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum LiabilityShift {
@@ -21,8 +20,8 @@ public enum LiabilityShift {
 		this.value = value;
 	}
 
-	@JsonCreator
-	public static LiabilityShift fromValue(@JsonProperty("value") String value) {
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+	public static LiabilityShift fromValue(String value) {
 		if (value == null) {
 			return null;
 		}

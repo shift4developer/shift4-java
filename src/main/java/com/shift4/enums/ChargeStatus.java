@@ -22,8 +22,8 @@ public enum ChargeStatus {
         this.value = value;
     }
 
-    @JsonCreator
-    public static ChargeStatus fromValue(@JsonProperty("value") String value) {
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+    public static ChargeStatus fromValue(String value) {
         if (value == null) {
             return null;
         }

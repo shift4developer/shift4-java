@@ -1,7 +1,6 @@
 package com.shift4.response;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum AvsCheckResult {
@@ -17,8 +16,8 @@ public enum AvsCheckResult {
 		this.value = value;
 	}
 
-	@JsonCreator
-	public static AvsCheckResult fromValue(@JsonProperty("value") String value) {
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+	public static AvsCheckResult fromValue(String value) {
 		if (value == null) {
 			return null;
 		}

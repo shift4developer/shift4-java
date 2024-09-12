@@ -1,7 +1,6 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ErrorType {
@@ -22,8 +21,8 @@ public enum ErrorType {
 		this.value = value;
 	}
 
-	@JsonCreator
-	public static ErrorType fromValue(@JsonProperty("value") String value) {
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+	public static ErrorType fromValue(String value) {
 		if (value == null) {
 			return null;
 		}

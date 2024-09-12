@@ -1,7 +1,6 @@
 package com.shift4.enums;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum PaymentMethodStatus {
@@ -22,8 +21,8 @@ public enum PaymentMethodStatus {
 		this.value = value;
 	}
 
-	@JsonCreator
-	public static PaymentMethodStatus fromValue(@JsonProperty("value") String value) {
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
+	public static PaymentMethodStatus fromValue(String value) {
 		if (value == null) {
 			return null;
 		}
