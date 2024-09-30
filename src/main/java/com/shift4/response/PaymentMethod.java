@@ -107,6 +107,7 @@ public class PaymentMethod {
         private String last4;
         private Integer amount;
         private String currency;
+        private String merchantTokenIdentifier;
 
         @JsonIgnore
         private final Map<String, Object> other = new HashMap<>();
@@ -140,6 +141,10 @@ public class PaymentMethod {
         }
 
         public String getCurrency() {
+            return currency;
+        }
+
+        public String getMerchantTokenIdentifier() {
             return currency;
         }
 
