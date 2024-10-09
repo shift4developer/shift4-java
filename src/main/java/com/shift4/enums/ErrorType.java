@@ -21,7 +21,7 @@ public enum ErrorType {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static ErrorType fromValue(String value) {
 		if (value == null) {
 			return null;

@@ -18,7 +18,7 @@ public enum FileUploadPurpose {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static FileUploadPurpose fromValue(String value) {
 		if (value == null) {
 			return null;

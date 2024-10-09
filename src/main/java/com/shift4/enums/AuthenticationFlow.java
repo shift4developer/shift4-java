@@ -19,7 +19,7 @@ public enum AuthenticationFlow {
         this.value = value;
     }
 
-    @JsonCreator
+    @JsonCreator(mode = JsonCreator.Mode.DELEGATING)
     public static AuthenticationFlow fromValue(String value) {
         if (value == null) {
             return null;

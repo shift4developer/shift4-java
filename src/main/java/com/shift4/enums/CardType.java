@@ -21,7 +21,7 @@ public enum CardType {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static CardType fromValue(String value) {
 		if (value == null) {
 			return null;

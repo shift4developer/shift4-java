@@ -25,7 +25,7 @@ public enum CardBrand {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static CardBrand fromValue(String value) {
 		if (value == null) {
 			return null;

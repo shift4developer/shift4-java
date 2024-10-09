@@ -16,7 +16,7 @@ public enum AvsCheckResult {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static AvsCheckResult fromValue(String value) {
 		if (value == null) {
 			return null;

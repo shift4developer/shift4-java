@@ -25,7 +25,7 @@ public enum DisputeReason {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static DisputeReason fromValue(String value) {
 		if (value == null) {
 			return null;

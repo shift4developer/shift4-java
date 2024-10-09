@@ -23,7 +23,7 @@ public enum SubscriptionStatus {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static SubscriptionStatus fromValue(String value) {
 		if (value == null) {
 			return null;

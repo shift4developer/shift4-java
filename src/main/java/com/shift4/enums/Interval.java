@@ -22,7 +22,7 @@ public enum Interval {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static Interval fromValue(String value) {
 		if (value == null) {
 			return null;

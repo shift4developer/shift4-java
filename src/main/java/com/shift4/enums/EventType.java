@@ -60,7 +60,7 @@ public enum EventType {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static EventType fromValue(String value) {
 		if (value == null) {
 			return null;

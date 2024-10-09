@@ -27,7 +27,7 @@ public enum BlacklistRuleType {
 		this.value = value;
 	}
 
-	@JsonCreator
+	@JsonCreator(mode = JsonCreator.Mode.DELEGATING)
 	public static BlacklistRuleType fromValue(String value) {
 		if (value == null) {
 			return null;
