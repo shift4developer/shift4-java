@@ -13,18 +13,35 @@ public abstract class AbstractShift4GatewayTest {
     protected final Shift4Gateway gateway;
 
     public AbstractShift4GatewayTest() {
-        String secretKey = dotenv.get("SECRET_KEY");
-        assertNotNull(secretKey, "specify SECRET_KEY as environment variable or through .env file");
-        this.gateway = new Shift4Gateway(secretKey);
+        this.gateway = createGateway("SECRET_KEY", false);
+    }
+
+    public Shift4Gateway createExplicitMerchantGateway() {
+        return createGateway("EXPLICIT_MERCHANT_SECRET_KEY", true);
+    }
+
+    private Shift4Gateway createGateway(String secretKeyParamName, boolean withExplicitMerchant) {
+        String secretKey = dotenv.get(secretKeyParamName);
+        assertNotNull(secretKey, String.format("specify %s as environment variable or through .env file", secretKeyParamName));
+
+        String explicitMerchant = null;
+        if (withExplicitMerchant) {
+            explicitMerchant = dotenv.get("EXPLICIT_MERCHANT");
+            assertNotNull(explicitMerchant, "specify EXPLICIT_MERCHANT as environment variable or through .env file");
+        }
+
+        Shift4Gateway shift4Gateway = new Shift4Gateway(secretKey, explicitMerchant);
 
         String apiUrl = dotenv.get("API_URL");
         if (apiUrl != null) {
-            gateway.setEndpoint(apiUrl);
+            shift4Gateway.setEndpoint(apiUrl);
         }
 
         String uploadsUrl = dotenv.get("UPLOADS_URL");
         if (uploadsUrl != null) {
-            gateway.setUploadsEndpoint(uploadsUrl);
+            shift4Gateway.setUploadsEndpoint(uploadsUrl);
         }
+
+        return shift4Gateway;
     }
 }
