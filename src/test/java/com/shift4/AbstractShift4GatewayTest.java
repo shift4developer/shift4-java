@@ -13,14 +13,14 @@ public abstract class AbstractShift4GatewayTest {
     protected final Shift4Gateway gateway;
 
     public AbstractShift4GatewayTest() {
-        this.gateway = createGateway("SECRET_KEY");
+        this.gateway = createGateway("SECRET_KEY", false);
     }
 
-    public Shift4Gateway createGateway(String secretKeyParamName) {
-        return createGateway(secretKeyParamName, false);
+    public Shift4Gateway createExplicitMerchantGateway() {
+        return createGateway("EXPLICIT_MERCHANT_SECRET_KEY", true);
     }
 
-    public Shift4Gateway createGateway(String secretKeyParamName, boolean withExplicitMerchant) {
+    private Shift4Gateway createGateway(String secretKeyParamName, boolean withExplicitMerchant) {
         String secretKey = dotenv.get(secretKeyParamName);
         assertNotNull(secretKey, String.format("specify %s as environment variable or through .env file", secretKeyParamName));
 

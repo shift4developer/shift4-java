@@ -28,6 +28,17 @@ public class UploadsTest extends AbstractShift4GatewayTest {
     }
 
     @Test
+    void shouldUploadUsingExplicitMerchant(@TempDir File tempDir) throws IOException {
+        // given
+        Shift4Gateway gatewayWithExplicitMerchant = createExplicitMerchantGateway();
+        File tempFile = createTestFile(tempDir);
+        // when
+        FileUpload fileUpload = gatewayWithExplicitMerchant.createFileUpload(tempFile, DISPUTE_EVIDENCE);
+        // then
+        assertThat(fileUpload.getId()).isNotBlank();
+    }
+
+    @Test
     void shouldRetrieveUploadedFile(@TempDir File tempDir) throws IOException {
         // given
         File tempFile = createTestFile(tempDir);
