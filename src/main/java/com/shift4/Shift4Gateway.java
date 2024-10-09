@@ -53,8 +53,17 @@ public class Shift4Gateway implements Closeable {
         this(secretKey, new HttpClientConnection());
     }
 
+    public Shift4Gateway(String secretKey, String merchantId) {
+        this(secretKey, merchantId, new HttpClientConnection());
+    }
+
     public Shift4Gateway(String secretKey, Connection connection) {
         this.gatewayClient = new ConnectionClient(connection, secretKey, DEFAULT_ENDPOINT);
+        this.gatewayUploadsClient = new ConnectionClient(connection, secretKey, UPLOADS_ENDPOINT);
+    }
+
+    public Shift4Gateway(String secretKey, String merchantId, Connection connection) {
+        this.gatewayClient = new ConnectionClient(connection, secretKey, merchantId, DEFAULT_ENDPOINT);
         this.gatewayUploadsClient = new ConnectionClient(connection, secretKey, UPLOADS_ENDPOINT);
     }
 
@@ -514,6 +523,10 @@ public class Shift4Gateway implements Closeable {
 
     public void setUploadsEndpoint(String uploadsEndpoint) {
         this.gatewayUploadsClient.setEndpoint(uploadsEndpoint);
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.gatewayClient.setMerchantId(merchantId);
     }
 
     public void setHeadersFactory(Shift4GatewayHeadersFactory headersFactory) {

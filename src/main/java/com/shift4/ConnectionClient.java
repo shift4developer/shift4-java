@@ -20,12 +20,18 @@ class ConnectionClient {
     private Shift4GatewayHeadersFactory headersFactory = new Shift4GatewayHeadersFactory();
     private Connection connection;
     private String secretKey;
+    private String merchantId;
     private String endpoint;
 
     ConnectionClient(Connection connection, String secretKey, String endpoint) {
         this.connection = connection;
         this.secretKey = secretKey;
         this.endpoint = endpoint;
+    }
+
+    ConnectionClient(Connection connection, String secretKey, String merchantId, String endpoint) {
+        this(connection, secretKey, endpoint);
+        this.merchantId = merchantId;
     }
 
     <T> T get(String path, Class<T> responseClass) {
@@ -98,11 +104,11 @@ class ConnectionClient {
     }
 
     protected Map<String, String> buildHeaders() {
-        return headersFactory.create(secretKey);
+        return headersFactory.create(secretKey, merchantId);
     }
 
     protected Map<String, String> buildHeaders(RequestOptions requestOptions) {
-        return headersFactory.create(secretKey, requestOptions);
+        return headersFactory.create(secretKey, merchantId, requestOptions);
     }
 
     public String getSecretKey() {
@@ -119,6 +125,10 @@ class ConnectionClient {
 
     public void setConnection(Connection connection) {
         this.connection = connection;
+    }
+
+    public void setMerchantId(String merchantId) {
+        this.merchantId = merchantId;
     }
 
     public void setHeadersFactory(Shift4GatewayHeadersFactory headersFactory) {

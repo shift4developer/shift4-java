@@ -122,4 +122,21 @@ class ChargesTest extends AbstractShift4GatewayTest {
         assertThat(second.getId()).isEqualTo(charge.getId());
     }
 
+    @Test
+    void shouldCreateChargeUsingExplicitMerchant() {
+        // given
+        Shift4Gateway gatewayWithExplicitMerchant = createGateway("SECRET_KEY", true);
+        Shift4Gateway gatewayAsExplicitMerchant = createGateway("EXPLICIT_MERCHANT_SECRET_KEY");
+        ChargeRequest request = charge().card(successCard());
+
+        // when
+        Charge createdCharge = gatewayWithExplicitMerchant.createCharge(request);
+        Charge retrievedCharge = gatewayAsExplicitMerchant.retrieveCharge(createdCharge.getId());
+
+        // then
+        assertThat(retrievedCharge.getStatus()).isEqualTo(ChargeStatus.SUCCESSFUL);
+        assertThat(retrievedCharge.getAmount()).isEqualTo(request.getAmount());
+        assertThat(retrievedCharge.getCurrency()).isEqualTo(request.getCurrency());
+        assertThat(retrievedCharge.getFailureCode()).isNull();
+    }
 }

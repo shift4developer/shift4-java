@@ -9,11 +9,11 @@ import java.util.Map;
 
 class Shift4GatewayHeadersFactory {
 
-    Map<String, String> create(String secretKey) {
-        return create(secretKey, null);
+    Map<String, String> create(String secretKey, String merchantId) {
+        return create(secretKey, merchantId, null);
     }
 
-    Map<String, String> create(String secretKey, RequestOptions requestOptions) {
+    Map<String, String> create(String secretKey, String merchantId, RequestOptions requestOptions) {
         Map<String, String> headers = new HashMap<>();
 
         headers.put("Authorization", "Basic " + Base64.encode((secretKey + ":").getBytes()));
@@ -23,6 +23,10 @@ class Shift4GatewayHeadersFactory {
 
         if (requestOptions != null && requestOptions.getIdempotencyKey() != null) {
             headers.put("Idempotency-Key", requestOptions.getIdempotencyKey());
+        }
+
+        if (merchantId != null) {
+            headers.put("Shift4-Merchant", merchantId);
         }
 
         return headers;
