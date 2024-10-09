@@ -33,9 +33,10 @@ public class UploadsTest extends AbstractShift4GatewayTest {
         Shift4Gateway gatewayWithExplicitMerchant = createExplicitMerchantGateway();
         File tempFile = createTestFile(tempDir);
         // when
-        FileUpload fileUpload = gatewayWithExplicitMerchant.createFileUpload(tempFile, DISPUTE_EVIDENCE);
+        FileUpload createdFileUpload = gatewayWithExplicitMerchant.createFileUpload(tempFile, DISPUTE_EVIDENCE);
+        FileUpload retirevedFileUpload = gateway.retrieveFileUpload(createdFileUpload.getId());
         // then
-        assertThat(fileUpload.getId()).isNotBlank();
+        assertThat(retirevedFileUpload.getId()).isNotBlank();
     }
 
     @Test
