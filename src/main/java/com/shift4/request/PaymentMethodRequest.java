@@ -6,6 +6,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.shift4.enums.PaymentMethodType;
 import com.shift4.response.Customer;
+import com.shift4.response.FraudCheckData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,10 +17,13 @@ public class PaymentMethodRequest {
 	private String customerId;
 	private PaymentMethodType type;
 	private BillingRequest billing;
+	private FraudCheckData fraudCheckData;
 	private ApplePay applePay;
 	private ThreeDSecure threeDSecure;
 	private GooglePay googlePay;
 	private String source;
+	private Map<String, String> metadata;
+	private String merchantAccountId;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -51,6 +55,10 @@ public class PaymentMethodRequest {
 		return billing;
 	}
 
+	public FraudCheckData getFraudCheckData() {
+		return fraudCheckData;
+	}
+
 	public ApplePay getApplePay() {
 		return applePay;
 	}
@@ -65,6 +73,14 @@ public class PaymentMethodRequest {
 
 	public String getSource() {
 		return source;
+	}
+
+	public Map<String, String> getMetadata() {
+		return metadata;
+	}
+
+	public String getMerchantAccountId() {
+		return merchantAccountId;
 	}
 
 	public PaymentMethodRequest id(String id) {
@@ -91,6 +107,11 @@ public class PaymentMethodRequest {
 		return this;
 	}
 
+	public PaymentMethodRequest fraudCheckData(FraudCheckData fraudCheckData) {
+		this.fraudCheckData = fraudCheckData;
+		return this;
+	}
+
 	public PaymentMethodRequest applePay(ApplePay applePay) {
 		this.applePay = applePay;
 		return this;
@@ -111,7 +132,15 @@ public class PaymentMethodRequest {
 		return this;
 	}
 
+	public PaymentMethodRequest metadata(Map<String, String> metadata) {
+		this.metadata = metadata;
+		return this;
+	}
 
+	public PaymentMethodRequest merchantAccountId(String merchantAccountId) {
+		this.merchantAccountId = merchantAccountId;
+		return this;
+	}
 
 	@JsonAnyGetter
 	private Map<String, Object> getOtherMap() {

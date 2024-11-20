@@ -23,6 +23,8 @@ public class PaymentMethod {
     private GooglePay googlePay;
     private PaymentMethod source;
     private PaymentMethodFlow flow;
+    private String merchantAccountId;
+    private Map<String, String> metadata;
 
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
@@ -89,6 +91,14 @@ public class PaymentMethod {
 
     public PaymentMethodFlow getFlow() {
         return flow;
+    }
+
+    public String getMerchantAccountId() {
+        return merchantAccountId;
+    }
+
+    public Map<String, String> getMetadata() {
+        return metadata;
     }
 
     public String get(String name) {
