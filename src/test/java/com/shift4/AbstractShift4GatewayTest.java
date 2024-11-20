@@ -17,7 +17,7 @@ public abstract class AbstractShift4GatewayTest {
     }
 
     public Shift4Gateway createExplicitMerchantGateway() {
-        return createGateway("EXPLICIT_MERCHANT_SECRET_KEY", true);
+        return createGateway("SECRET_KEY", true);
     }
 
     private Shift4Gateway createGateway(String secretKeyParamName, boolean withExplicitMerchant) {
