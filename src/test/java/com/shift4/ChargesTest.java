@@ -130,7 +130,7 @@ class ChargesTest extends AbstractShift4GatewayTest {
 
         // when
         Charge createdCharge = gatewayWithExplicitMerchant.createCharge(request);
-        Charge retrievedCharge = gateway.retrieveCharge(createdCharge.getId());
+        Charge retrievedCharge = gatewayWithExplicitMerchant.retrieveCharge(createdCharge.getId());
 
         // then
         assertThat(retrievedCharge.getStatus()).isEqualTo(ChargeStatus.SUCCESSFUL);
