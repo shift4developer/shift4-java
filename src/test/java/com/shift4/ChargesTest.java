@@ -1,5 +1,6 @@
 package com.shift4;
 
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.shift4.enums.ChargeStatus;
 import com.shift4.enums.ErrorType;
 import com.shift4.exception.Shift4Exception;
@@ -14,6 +15,7 @@ import org.junit.jupiter.api.Test;
 
 import java.util.UUID;
 
+import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS;
 import static com.shift4.enums.ErrorCode.INCORRECT_CVC;
 import static com.shift4.testdata.Cards.incorrectCvcCard;
 import static com.shift4.testdata.Cards.successCard;
@@ -27,6 +29,7 @@ class ChargesTest extends AbstractShift4GatewayTest {
 
     @Test
     void shouldCreateCharge() {
+        SerializationFeature a = WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS;
         // given
         ChargeRequest request = charge().card(successCard());
         // when
