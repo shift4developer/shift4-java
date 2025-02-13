@@ -39,9 +39,13 @@ class ConnectionClient {
     }
 
     <T> T get(String path, Class<T> responseClass, Expand expand) {
+        return get(path, responseClass, expand, null);
+    }
+
+    <T> T get(String path, Class<T> responseClass, Expand expand, RequestOptions options) {
         RetrieveRequest request = new RetrieveRequest().expand(expand);
         String url = buildQueryString(endpoint + path, request);
-        Response response = connection.get(url, buildHeaders());
+        Response response = connection.get(url, buildHeaders(options));
         ensureSuccess(response);
         return objectSerializer.deserialize(response.getBody(), responseClass);
     }
@@ -71,8 +75,12 @@ class ConnectionClient {
     }
 
     <T> ListResponse<T> list(String path, Object request, Class<T> elementClass) {
+        return list(path, request, null, elementClass);
+    }
+
+    <T> ListResponse<T> list(String path, Object request, RequestOptions options, Class<T> elementClass) {
         String url = buildQueryString(endpoint + path, request);
-        Response response = connection.get(url, buildHeaders());
+        Response response = connection.get(url, buildHeaders(options));
         ensureSuccess(response);
         return objectSerializer.deserializeList(response.getBody(), elementClass);
     }

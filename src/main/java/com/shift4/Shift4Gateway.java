@@ -470,6 +470,9 @@ public class Shift4Gateway implements Closeable {
     protected <T> T get(String path, Class<T> responseClass, Expand expand) {
         return gatewayClient.get(path, responseClass, expand);
     }
+    protected <T> T get(String path, Class<T> responseClass, RequestOptions options, Expand expand) {
+        return gatewayClient.get(path, responseClass, expand, options);
+    }
 
     protected <T> T uploadsGet(String path, Class<T> responseClass) {
         return gatewayUploadsClient.get(path, responseClass);
@@ -493,6 +496,10 @@ public class Shift4Gateway implements Closeable {
 
     protected <T> ListResponse<T> list(String path, Object request, Class<T> elementClass) {
         return gatewayClient.list(path, request, elementClass);
+    }
+
+    protected <T> ListResponse<T> list(String path, Object request, RequestOptions options, Class<T> elementClass) {
+        return gatewayClient.list(path, request, options, elementClass);
     }
 
     protected <T> ListResponse<T> uploadslist(String path, Object request, Class<T> elementClass) {
