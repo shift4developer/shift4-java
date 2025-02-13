@@ -21,8 +21,13 @@ class Shift4GatewayHeadersFactory {
         headers.put("User-Agent", "Shift4-Java/" + Shift4Utils.getBuildVersion()
                 + " (Java/" + Shift4Utils.getJavaVersion() + ")");
 
-        if (requestOptions != null && requestOptions.getIdempotencyKey() != null) {
-            headers.put("Idempotency-Key", requestOptions.getIdempotencyKey());
+        if (requestOptions != null) {
+            if (requestOptions.getIdempotencyKey() != null) {
+                headers.put("Idempotency-Key", requestOptions.getIdempotencyKey());
+            }
+            if (requestOptions.getShift4Version() != null) {
+                headers.put("Shift4-Version", requestOptions.getShift4Version());
+            }
         }
 
         if (merchantId != null) {
