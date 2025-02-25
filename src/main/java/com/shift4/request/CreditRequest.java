@@ -20,6 +20,7 @@ public class CreditRequest {
     private String description;
     private ReceiverRequest receiver;
     private String merchantAccountId;
+    private CreditFundsSenderRequest sender;
 
     private Map<String, String> metadata;
 
@@ -59,6 +60,10 @@ public class CreditRequest {
 
     public String getMerchantAccountId() {
         return merchantAccountId;
+    }
+
+    public CreditFundsSenderRequest getSender() {
+        return sender;
     }
 
     public Map<String, String> getMetadata() {
@@ -106,6 +111,11 @@ public class CreditRequest {
 
     public CreditRequest metadata(Map<String, String> metadata) {
         this.metadata = metadata;
+        return this;
+    }
+
+    public CreditRequest sender(CreditFundsSenderRequest sender) {
+        this.sender = sender;
         return this;
     }
 
