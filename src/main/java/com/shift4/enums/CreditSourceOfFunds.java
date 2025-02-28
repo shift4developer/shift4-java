@@ -15,7 +15,7 @@ public enum CreditSourceOfFunds {
     /**
      * Used when received value can't be mapped to this enumeration.
      */
-    UNKNOWN("unknown");
+    UNRECOGNIZED("unrecognized");
 
     private final String value;
 
@@ -34,7 +34,7 @@ public enum CreditSourceOfFunds {
             }
         }
 
-        return UNKNOWN;
+        return UNRECOGNIZED;
     }
 
     @JsonValue
