@@ -14,6 +14,7 @@ public enum PaymentMethodType {
 	EPS("eps"),
 	ESTONIANBANKS("estonianbanks"),
 	IDEAL("ideal"),
+	KLARNA_DEBIT_RISK("klarna_debit_risk"),
 	LATVIANBANKS("latvianbanks"),
 	LITHUANIANBANKS("lithuanianbanks"),
 	MAXIMA("maxima"),
