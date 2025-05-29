@@ -15,6 +15,7 @@ public class Customer {
 	private boolean deleted = false;
 
 	private String email;
+	private String phoneNumber;
 	private String description;
 	private String defaultCardId;
 	private List<Card> cards;
