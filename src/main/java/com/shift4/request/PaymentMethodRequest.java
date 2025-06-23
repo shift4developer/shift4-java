@@ -6,7 +6,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.shift4.enums.PaymentMethodType;
 import com.shift4.response.Customer;
-import com.shift4.response.FraudCheckData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,7 +16,7 @@ public class PaymentMethodRequest {
 	private String customerId;
 	private PaymentMethodType type;
 	private BillingRequest billing;
-	private FraudCheckData fraudCheckData;
+	private FraudCheckDataRequest fraudCheckData;
 	private ApplePay applePay;
 	private ThreeDSecure threeDSecure;
 	private GooglePay googlePay;
@@ -55,7 +54,7 @@ public class PaymentMethodRequest {
 		return billing;
 	}
 
-	public FraudCheckData getFraudCheckData() {
+	public FraudCheckDataRequest getFraudCheckData() {
 		return fraudCheckData;
 	}
 
@@ -107,7 +106,7 @@ public class PaymentMethodRequest {
 		return this;
 	}
 
-	public PaymentMethodRequest fraudCheckData(FraudCheckData fraudCheckData) {
+	public PaymentMethodRequest fraudCheckData(FraudCheckDataRequest fraudCheckData) {
 		this.fraudCheckData = fraudCheckData;
 		return this;
 	}
