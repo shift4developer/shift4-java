@@ -188,7 +188,6 @@ public class PaymentMethod {
         }
     }
 
-
     public static class GooglePay {
         private String cardBrand;
         private String cardType;

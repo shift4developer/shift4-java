@@ -1,6 +1,9 @@
 package com.shift4;
 
 import com.shift4.enums.PaymentMethodType;
+import com.shift4.request.AddressRequest;
+import com.shift4.request.BillingRequest;
+import com.shift4.request.FraudCheckDataRequest;
 import com.shift4.request.PaymentMethodRequest;
 import com.shift4.response.PaymentMethod;
 import org.junit.jupiter.api.Test;
@@ -10,7 +13,7 @@ import java.util.Map;
 import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
-public class PaymentMethodIT extends AbstractShift4GatewayTest{
+public class PaymentMethodIT extends AbstractShift4GatewayTest {
 
     @Test
     void shouldCreatePaymentMethodFromToken() {
@@ -37,7 +40,7 @@ public class PaymentMethodIT extends AbstractShift4GatewayTest{
     void shouldCreateGooglePayPaymentMethod() {
         // when
         PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.GOOGLE_PAY)
-            .googlePay(new PaymentMethodRequest.GooglePay("PAN_ONLY")));
+                .googlePay(new PaymentMethodRequest.GooglePay("PAN_ONLY")));
 
         // then
         assertThat(paymentMethod).isNotNull();
@@ -54,16 +57,78 @@ public class PaymentMethodIT extends AbstractShift4GatewayTest{
     }
 
     @Test
+    void shouldCreateSwishPaymentMethod() {
+        // when
+        PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.SWISH)
+                .billing(new BillingRequest().address(new AddressRequest().country("SE")).name("John Doe"))
+                .swish(new PaymentMethodRequest.Swish(PaymentMethodRequest.Swish.SwishLinkMethod.QR_CODE)));
+
+        // then
+        assertThat(paymentMethod).isNotNull();
+        assertThat(paymentMethod.getId()).isNotNull();
+        assertThat(paymentMethod.getType()).isEqualTo(PaymentMethodType.SWISH);
+
+        assertThat(paymentMethod.getFlow()).isNotNull();
+        assertThat(paymentMethod.getFlow().getNextAction()).isNotNull();
+    }
+
+    @Test
+    void shouldCreateBlikPaymentMethod() {
+        // when
+        PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.BLIK)
+                .billing(new BillingRequest().address(new AddressRequest().country("PL")).name("John Doe")));
+
+        // then
+        assertThat(paymentMethod).isNotNull();
+        assertThat(paymentMethod.getId()).isNotNull();
+        assertThat(paymentMethod.getType()).isEqualTo(PaymentMethodType.BLIK);
+
+        assertThat(paymentMethod.getFlow()).isNotNull();
+        assertThat(paymentMethod.getFlow().getNextAction()).isNotNull();
+    }
+
+    @Test
+    void shouldCreateBlikWithCodePaymentMethod() {
+        // when
+        PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.BLIK)
+                .billing(new BillingRequest().address(new AddressRequest().country("PL")).name("John Doe"))
+                .fraudCheckData(new FraudCheckDataRequest().userAgent("").ipAddress("127.0.0.1"))
+                .blik(new PaymentMethodRequest.Blik().code("123456")));
+
+        // then
+        assertThat(paymentMethod).isNotNull();
+        assertThat(paymentMethod.getId()).isNotNull();
+        assertThat(paymentMethod.getType()).isEqualTo(PaymentMethodType.BLIK);
+
+        assertThat(paymentMethod.getFlow()).isNotNull();
+        assertThat(paymentMethod.getFlow().getNextAction()).isNotNull();
+    }
+
+    @Test
+    void shouldCreateKlarnaDebitRiskPaymentMethod() {
+        // when
+        PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.KLARNA_DEBIT_RISK)
+                .billing(new BillingRequest().address(new AddressRequest().country("SE")).name("John Doe")));
+
+        // then
+        assertThat(paymentMethod).isNotNull();
+        assertThat(paymentMethod.getId()).isNotNull();
+        assertThat(paymentMethod.getType()).isEqualTo(PaymentMethodType.KLARNA_DEBIT_RISK);
+        assertThat(paymentMethod.getFlow()).isNotNull();
+        assertThat(paymentMethod.getFlow().getNextAction()).isNotNull();
+    }
+
+    @Test
     void shouldCreateGooglePayWithThreeDSecurePaymentMethod() {
         // when
         PaymentMethod source = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.GOOGLE_PAY)
-            .googlePay(new PaymentMethodRequest.GooglePay("CRYPTOGRAM_3DS")));
+                .googlePay(new PaymentMethodRequest.GooglePay("CRYPTOGRAM_3DS")));
         PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.THREE_D_SECURE)
-            .source(source.getId())
+                .source(source.getId())
                 .googlePay(new PaymentMethodRequest.GooglePay("CRYPTOGRAM_3DS"))
-            .threeDSecure(new PaymentMethodRequest.ThreeDSecure()
-                .currency("USD")
-                .amount(60))
+                .threeDSecure(new PaymentMethodRequest.ThreeDSecure()
+                        .currency("USD")
+                        .amount(60))
         );
 
         // then

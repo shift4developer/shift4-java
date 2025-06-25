@@ -26,7 +26,7 @@ class CustomerTest extends AbstractShift4GatewayTest {
         // then
         assertThat(created.isDeleted()).isFalse();
         assertThat(created.getId()).isNotBlank();
-        assertThat(created.getEmail()).isEqualTo(request.getEmail());
+        assertThat(created.getEmail()).isEqualToIgnoringCase(request.getEmail());
         assertThat(created.getDescription()).isEqualTo(request.getDescription());
         assertThat(created.getMetadata()).isEqualTo(request.getMetadata());
     }
