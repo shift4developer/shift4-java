@@ -28,6 +28,7 @@ public enum PaymentMethodType {
 	PAYU("payu"),
 	PERLAS("perlas"),
 	SKRILL("skrill"),
+	SWISH("swish"),
 	TRUSTLY("trustly"),
 	UNIONPAY("unionpay"),
 	VERKKOPANKKI("verkkopankki"),

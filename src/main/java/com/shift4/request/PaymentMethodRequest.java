@@ -1,12 +1,8 @@
 package com.shift4.request;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.*;
 import com.shift4.enums.PaymentMethodType;
 import com.shift4.response.Customer;
-import com.shift4.response.FraudCheckData;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,10 +13,12 @@ public class PaymentMethodRequest {
 	private String customerId;
 	private PaymentMethodType type;
 	private BillingRequest billing;
-	private FraudCheckData fraudCheckData;
+	private FraudCheckDataRequest fraudCheckData;
 	private ApplePay applePay;
 	private ThreeDSecure threeDSecure;
 	private GooglePay googlePay;
+	private Swish swish;
+	private Blik blik;
 	private String source;
 	private Map<String, String> metadata;
 	private String merchantAccountId;
@@ -55,7 +53,7 @@ public class PaymentMethodRequest {
 		return billing;
 	}
 
-	public FraudCheckData getFraudCheckData() {
+	public FraudCheckDataRequest getFraudCheckData() {
 		return fraudCheckData;
 	}
 
@@ -69,6 +67,14 @@ public class PaymentMethodRequest {
 
 	public GooglePay getGooglePay() {
 		return googlePay;
+	}
+
+	public Swish getSwish() {
+		return swish;
+	}
+
+	public Blik getBlik() {
+		return blik;
 	}
 
 	public String getSource() {
@@ -107,7 +113,7 @@ public class PaymentMethodRequest {
 		return this;
 	}
 
-	public PaymentMethodRequest fraudCheckData(FraudCheckData fraudCheckData) {
+	public PaymentMethodRequest fraudCheckData(FraudCheckDataRequest fraudCheckData) {
 		this.fraudCheckData = fraudCheckData;
 		return this;
 	}
@@ -124,6 +130,17 @@ public class PaymentMethodRequest {
 
 	public PaymentMethodRequest googlePay(GooglePay googlePay) {
 		this.googlePay = googlePay;
+		return this;
+	}
+
+	public PaymentMethodRequest swish(Swish swish) {
+		this.swish = swish;
+		return this;
+	}
+
+
+	public PaymentMethodRequest blik(Blik blik) {
+		this.blik = blik;
 		return this;
 	}
 
@@ -184,10 +201,68 @@ public class PaymentMethodRequest {
 		}
 	}
 
+	public static class Swish {
+		private SwishLinkMethod linkMethod;
+
+		@JsonIgnore
+		private final Map<String, Object> other = new HashMap<>();
+
+		public Swish(SwishLinkMethod linkMethod) {
+			this.linkMethod = linkMethod;
+		}
+
+		public SwishLinkMethod getLinkMethod() {
+			return linkMethod;
+		}
+
+		@JsonAnyGetter
+		private Map<String, Object> getOtherMap() {
+			return other;
+		}
+
+		@JsonAnySetter
+		public Swish set(String name, Object value) {
+			other.put(name, value);
+			return this;
+		}
+
+		public enum SwishLinkMethod {
+			@JsonProperty("app_redirect") APP_REDIRECT,
+			@JsonProperty("phone_number") PHONE_NUMBER,
+			@JsonProperty("qr_code") QR_CODE
+		}
+	}
+
+	public static class Blik {
+		private String code;
+
+		@JsonIgnore
+		private final Map<String, Object> other = new HashMap<>();
+
+		public Blik code(String code) {
+			this.code = code;
+			return this;
+		}
+
+		public String getCode() {
+			return code;
+		}
+
+		@JsonAnyGetter
+		private Map<String, Object> getOtherMap() {
+			return other;
+		}
+
+		@JsonAnySetter
+		public Blik set(String name, Object value) {
+			other.put(name, value);
+			return this;
+		}
+	}
+
 	public static class ThreeDSecure {
 		private String currency;
 		private Integer amount;
-
 
 		public ThreeDSecure(String currency, Integer amount) {
 			this.currency = currency;
@@ -255,9 +330,5 @@ public class PaymentMethodRequest {
 			other.put(name, value);
 			return this;
 		}
-
 	}
-
-
-
 }

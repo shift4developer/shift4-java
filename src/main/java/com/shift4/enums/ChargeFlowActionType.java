@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum ChargeFlowActionType {
-
+    APP_REDIRECT("app_redirect"),
+    QR_CODE("qr_code"),
+    MOBILE_APP_CONFIRMATION("mobile_app_confirmation"),
     REDIRECT("redirect"),
     WAIT("wait"),
     NONE("none"),
