@@ -13,6 +13,7 @@ public enum DisputeStatus {
 	CHARGEBACK_RESPONSE_UNDER_REVIEW("chargeback_response_under_review"),
 	CHARGEBACK_REPRESENTED_SUCCESSFULLY("chargeback_represented_successfully"),
 	CHARGEBACK_REPRESENTED_UNSUCCESSFULLY("chargeback_represented_unsuccessfully"),
+	CHARGEBACK_PREVENTED("chargeback_prevented"),
 
 	/**
 	 * Used when received value can't be mapped to this enumeration.
