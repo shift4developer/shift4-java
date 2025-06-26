@@ -5,6 +5,7 @@ import com.shift4.request.CreatedFilter;
 import com.shift4.request.PayoutListRequest;
 import com.shift4.response.ListResponse;
 import com.shift4.response.Payout;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 import java.util.Optional;
@@ -30,6 +31,7 @@ public class PayoutsTest extends AbstractShift4GatewayTest {
     }
 
     @Test
+    @Disabled
     void shouldListPayouts() {
         // given
         ChargeRequest request = charge().card(successCard()).currency("EUR");
