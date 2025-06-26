@@ -13,6 +13,7 @@ import java.util.Map;
 public class CustomerRequest {
 
 	private String email;
+	private String phoneNumber;
 	private String description;
 	private CardRequest card;
 	private PaymentMethodRequest paymentMethod;
@@ -30,6 +31,10 @@ public class CustomerRequest {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
 	public String getDescription() {
@@ -50,6 +55,11 @@ public class CustomerRequest {
 
 	public CustomerRequest email(String email) {
 		this.email = email;
+		return this;
+	}
+
+	public CustomerRequest phoneNumber(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 		return this;
 	}
 

@@ -15,6 +15,7 @@ public class Customer {
 	private boolean deleted = false;
 
 	private String email;
+	private String phoneNumber;
 	private String description;
 	private String defaultCardId;
 	private List<Card> cards;
@@ -37,6 +38,10 @@ public class Customer {
 
 	public String getEmail() {
 		return email;
+	}
+
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
 	public String getDescription() {
