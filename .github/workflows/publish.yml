@@ -30,7 +30,7 @@ jobs:
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.MAVEN_SINGING_PASSWORD }}
           JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.JRELEASER_MAVENCENTRAL_USERNAME }}
           JRELEASER_MAVENCENTRAL_PASSWORD: ${{ secrets.JRELEASER_MAVENCENTRAL_PASSWORD }}
-        run: ./gradlew jreleaserDeploy -x test
+        run: ./gradlew build jreleaserDeploy -x test
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v4
