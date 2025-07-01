@@ -94,11 +94,7 @@ publishing {
     }
     repositories {
         maven {
-            url = findProperty("nexusUrl") ?: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            credentials {
-                username = findProperty("nexusUsername")
-                password = findProperty("nexusPassword")
-            }
+            url = layout.buildDirectory.dir("staging-deploy").get().asFile.toURI()
         }
     }
 }
@@ -134,7 +130,7 @@ jreleaser {
                     url = 'https://central.sonatype.com/api/v1/publisher'
                     snapshotSupported = true
                     applyMavenCentralRules = true
-                    stagingRepository('target/staging-deploy')
+                    stagingRepository('build/staging-deploy')
                 }
             }
         }
