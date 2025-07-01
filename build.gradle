@@ -2,10 +2,11 @@ plugins {
     id 'maven-publish'
     id 'java'
     id 'signing'
+    id 'org.jreleaser' version '1.19.0'
 }
 
 group = "com.shift4"
-version = "3.0.0"
+version = "3.0.1-SNAPSHOT"
 archivesBaseName = "shift4-java"
 
 repositories {
@@ -117,4 +118,25 @@ if (findProperty("signingKey") != null) {
 
 repositories {
     mavenCentral()
+}
+
+jreleaser {
+    signing {
+        active = 'ALWAYS'
+        armored = true
+        verify = false
+    }
+    deploy {
+        maven {
+            mavenCentral {
+                sonatype {
+                    active = 'ALWAYS'
+                    url = 'https://central.sonatype.com/api/v1/publisher'
+                    snapshotSupported = true
+                    applyMavenCentralRules = true
+                    stagingRepository = 'target/staging-deploy'
+                }
+            }
+        }
+    }
 }
