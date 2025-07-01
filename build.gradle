@@ -134,7 +134,7 @@ jreleaser {
                     url = 'https://central.sonatype.com/api/v1/publisher'
                     snapshotSupported = true
                     applyMavenCentralRules = true
-                    stagingRepository = 'target/staging-deploy'
+                    stagingRepository('target/staging-deploy')
                 }
             }
         }
