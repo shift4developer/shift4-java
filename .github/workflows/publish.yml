@@ -20,7 +20,10 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Execute Gradle publish
+      - name: Prepare for deploy
+        run: mkdir -p target/staging-deploy
+
+      - name: Execute JReleaser deploy
         env:
           JRELEASER_GPG_SECRET_KEY: ${{ secrets.MAVEN_SINGING_KEY }}
           JRELEASER_GPG_PASSPHRASE: ${{ secrets.MAVEN_SINGING_PASSWORD }}
