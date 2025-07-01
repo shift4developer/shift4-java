@@ -6,14 +6,12 @@ plugins {
 }
 
 group = 'com.shift4'
-version = '3.0.1-SNAPSHOT'
+version = '3.0.1'
 archivesBaseName = 'shift4-java'
 
 def stagingForReleases = 'staging-deploy/releases'
-def stagingForSnapshots = 'staging-deploy/snapshots'
 
 def releasesMavenCentralUrl = 'https://central.sonatype.com/api/v1/publisher'
-def snapshotsMavenCentralUrl = 'https://central.sonatype.com/repository/maven-snapshots/'
 
 repositories {
     mavenCentral()
@@ -100,7 +98,7 @@ publishing {
     }
     repositories {
         maven {
-            url = layout.buildDirectory.dir(version.endsWith('SNAPSHOT') ? stagingForSnapshots : stagingForReleases).get().asFile.toURI()
+            url = layout.buildDirectory.dir(stagingForReleases).get().asFile.toURI()
         }
     }
 }
@@ -115,13 +113,12 @@ jreleaser {
     deploy {
         maven {
             mavenCentral {
-                sonatype {
+                releases {
                     active = 'ALWAYS'
-                    def isSnapshot = version.endsWith('SNAPSHOT')
-                    url = isSnapshot ? snapshotsMavenCentralUrl : releasesMavenCentralUrl
-                    snapshotSupported = isSnapshot
+                    url = releasesMavenCentralUrl
+                    snapshotSupported = false
                     applyMavenCentralRules = true
-                    stagingRepository('build/' + (isSnapshot ? stagingForSnapshots : stagingForReleases))
+                    stagingRepository('build/' + stagingForReleases)
                 }
             }
         }
