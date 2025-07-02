@@ -20,13 +20,14 @@ jobs:
       - name: Setup Gradle
         uses: gradle/gradle-build-action@v2
 
-      - name: Execute Gradle publish
+      - name: Execute JReleaser deploy
         env:
-          ORG_GRADLE_PROJECT_signingKey: ${{ secrets.MAVEN_SINGING_KEY }}
-          ORG_GRADLE_PROJECT_signingPassword: ${{ secrets.MAVEN_SINGING_PASSWORD }}
-          ORG_GRADLE_PROJECT_nexusPassword: ${{ secrets.NEXUS_PASSWORD }}
-          ORG_GRADLE_PROJECT_nexusUsername: ${{ secrets.NEXUS_USERNAME }}
-        run: ./gradlew publishAllPublicationsToMavenRepository -x test
+          JRELEASER_GPG_PUBLIC_KEY: ${{ secrets.MAVEN_PUBLIC_KEY }}
+          JRELEASER_GPG_SECRET_KEY: ${{ secrets.MAVEN_SINGING_KEY }}
+          JRELEASER_GPG_PASSPHRASE: ${{ secrets.MAVEN_SINGING_PASSWORD }}
+          JRELEASER_MAVENCENTRAL_USERNAME: ${{ secrets.JRELEASER_MAVENCENTRAL_USERNAME }}
+          JRELEASER_MAVENCENTRAL_PASSWORD: ${{ secrets.JRELEASER_MAVENCENTRAL_PASSWORD }}
+        run: ./gradlew build publish jreleaserDeploy -x test
 
       - name: Archive artifacts
         uses: actions/upload-artifact@v4

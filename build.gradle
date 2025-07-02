@@ -2,11 +2,16 @@ plugins {
     id 'maven-publish'
     id 'java'
     id 'signing'
+    id 'org.jreleaser' version '1.19.0'
 }
 
-group = "com.shift4"
-version = "3.0.0"
-archivesBaseName = "shift4-java"
+group = 'com.shift4'
+version = '3.0.1'
+archivesBaseName = 'shift4-java'
+
+def stagingForReleases = 'staging-deploy/releases'
+
+def releasesMavenCentralUrl = 'https://central.sonatype.com/api/v1/publisher'
 
 repositories {
     mavenCentral()
@@ -34,7 +39,7 @@ test {
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.0'
+    implementation 'com.fasterxml.jackson.core:jackson-databind:2.19.1'
     implementation 'org.apache.httpcomponents:httpclient:4.5.14'
     implementation 'commons-codec:commons-codec:1.15'
     implementation 'org.apache.httpcomponents:httpmime:4.5.14'
@@ -48,8 +53,8 @@ dependencies {
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine:5.11.3'
 }
 
-ext.genResourcesDir = file("$buildDir/generated-resources")
-task generateBuildProperties {
+ext.genResourcesDir = layout.buildDirectory.dir('generated-resources').get().asFile
+tasks.register('generateBuildProperties') {
     ext.buildPropertiesFile = file("$genResourcesDir/com/shift4/build.properties")
     outputs.file(buildPropertiesFile)
     doLast {
@@ -93,10 +98,28 @@ publishing {
     }
     repositories {
         maven {
-            url = findProperty("nexusUrl") ?: "https://s01.oss.sonatype.org/service/local/staging/deploy/maven2/"
-            credentials {
-                username = findProperty("nexusUsername")
-                password = findProperty("nexusPassword")
+            url = layout.buildDirectory.dir(stagingForReleases).get().asFile.toURI()
+        }
+    }
+}
+
+
+jreleaser {
+    signing {
+        active = 'ALWAYS'
+        armored = true
+        verify = false
+    }
+    deploy {
+        maven {
+            mavenCentral {
+                releases {
+                    active = 'ALWAYS'
+                    url = releasesMavenCentralUrl
+                    snapshotSupported = false
+                    applyMavenCentralRules = true
+                    stagingRepository('build/' + stagingForReleases)
+                }
             }
         }
     }
@@ -118,3 +141,4 @@ if (findProperty("signingKey") != null) {
 repositories {
     mavenCentral()
 }
+
