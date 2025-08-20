@@ -141,7 +141,7 @@ public class ThreeDSecureRequest {
 			return this;
 		}
 
-		enum Status {
+		public enum Status {
 			Y, N, A, U, R, E
 		}
 	}
