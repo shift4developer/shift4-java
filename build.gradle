@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'com.shift4'
-version = '3.0.1'
+version = '3.1.0'
 archivesBaseName = 'shift4-java'
 
 def stagingForReleases = 'staging-deploy/releases'
