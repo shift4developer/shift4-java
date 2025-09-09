@@ -24,6 +24,8 @@ public class CustomerUpdateRequest {
 	private CardRequest card;
 	private Map<String, String> metadata;
 
+	private BillingRequest billing;
+
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
 
@@ -106,6 +108,11 @@ public class CustomerUpdateRequest {
 
 	public CustomerUpdateRequest metadata(Map<String, String> metadata) {
 		this.metadata = metadata;
+		return this;
+	}
+
+	public CustomerUpdateRequest billing(BillingRequest billing) {
+		this.billing = billing;
 		return this;
 	}
 

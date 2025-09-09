@@ -18,6 +18,7 @@ public class CustomerRequest {
 	private CardRequest card;
 	private PaymentMethodRequest paymentMethod;
 	private Map<String, String> metadata;
+	private BillingRequest billing;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -80,6 +81,11 @@ public class CustomerRequest {
 
 	public CustomerRequest metadata(Map<String, String> metadata) {
 		this.metadata = metadata;
+		return this;
+	}
+
+	public CustomerRequest billing(BillingRequest billing) {
+		this.billing = billing;
 		return this;
 	}
 
