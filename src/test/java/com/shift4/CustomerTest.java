@@ -1,16 +1,17 @@
 package com.shift4;
 
-import com.shift4.request.CustomerListRequest;
-import com.shift4.request.CustomerRequest;
-import com.shift4.request.CustomerUpdateRequest;
+import com.shift4.request.*;
 import com.shift4.response.Customer;
 import com.shift4.response.DeleteResponse;
 import com.shift4.response.ListResponse;
 import com.shift4.testdata.Emails;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.Test;
 
 import static com.shift4.testdata.Customers.customer;
 import static java.util.Collections.singletonMap;
+import static org.apache.commons.lang3.RandomStringUtils.randomAlphabetic;
+import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class CustomerTest extends AbstractShift4GatewayTest {
@@ -29,6 +30,7 @@ class CustomerTest extends AbstractShift4GatewayTest {
         assertThat(created.getEmail()).isEqualToIgnoringCase(request.getEmail());
         assertThat(created.getDescription()).isEqualTo(request.getDescription());
         assertThat(created.getMetadata()).isEqualTo(request.getMetadata());
+        assertThat(created.getBilling()).isNull();
     }
 
     @Test
@@ -93,5 +95,120 @@ class CustomerTest extends AbstractShift4GatewayTest {
         assertThat(response.getList())
                 .extracting(Customer::getId)
                 .containsExactly(customer3.getId(), customer2.getId(), customer1.getId());
+    }
+
+    @Test
+    void shouldCreateAndRetrieveCustomerWithBillingAddress() {
+        //given
+        BillingRequest billingRequest = new BillingRequest()
+                .name(randomAlphabetic(10))
+                .email(Emails.email())
+                .vat(randomAlphabetic(10))
+                .phone(randomNumeric(9))
+                .address(new AddressRequest()
+                        .line1(randomAlphabetic(10))
+                        .line2(randomAlphabetic(10))
+                        .state(randomAlphabetic(10))
+                        .zip(randomNumeric(5))
+                        .city(randomAlphabetic(10))
+                        .country("SE"));
+
+        // when
+        Customer customer = gateway.createCustomer(new CustomerRequest()
+                .email(Emails.email())
+                .billing(billingRequest));
+
+        // then
+        assertThat(customer.getBilling().getEmail()).isEqualTo(billingRequest.getEmail());
+        assertThat(customer.getBilling().getName()).isEqualTo(billingRequest.getName());
+        assertThat(customer.getBilling().getVat()).isEqualTo(billingRequest.getVat());
+        assertThat(customer.getBilling().getPhone()).isEqualTo(billingRequest.getPhone());
+        assertThat(customer.getBilling().getAddress().getLine1()).isEqualTo(billingRequest.getAddress().getLine1());
+        assertThat(customer.getBilling().getAddress().getLine2()).isEqualTo(billingRequest.getAddress().getLine2());
+        assertThat(customer.getBilling().getAddress().getState()).isEqualTo(billingRequest.getAddress().getState());
+        assertThat(customer.getBilling().getAddress().getZip()).isEqualTo(billingRequest.getAddress().getZip());
+        assertThat(customer.getBilling().getAddress().getCity()).isEqualTo(billingRequest.getAddress().getCity());
+        assertThat(customer.getBilling().getAddress().getCountry()).isEqualTo(billingRequest.getAddress().getCountry());
+
+        // when
+        Customer retrieved = gateway.retrieveCustomer(customer.getId());
+
+        // then
+        assertThat(retrieved.getBilling().getEmail()).isEqualTo(billingRequest.getEmail());
+        assertThat(retrieved.getBilling().getName()).isEqualTo(billingRequest.getName());
+        assertThat(retrieved.getBilling().getVat()).isEqualTo(billingRequest.getVat());
+        assertThat(retrieved.getBilling().getPhone()).isEqualTo(billingRequest.getPhone());
+        assertThat(retrieved.getBilling().getAddress().getLine1()).isEqualTo(billingRequest.getAddress().getLine1());
+        assertThat(retrieved.getBilling().getAddress().getLine2()).isEqualTo(billingRequest.getAddress().getLine2());
+        assertThat(retrieved.getBilling().getAddress().getState()).isEqualTo(billingRequest.getAddress().getState());
+        assertThat(retrieved.getBilling().getAddress().getZip()).isEqualTo(billingRequest.getAddress().getZip());
+        assertThat(retrieved.getBilling().getAddress().getCity()).isEqualTo(billingRequest.getAddress().getCity());
+        assertThat(retrieved.getBilling().getAddress().getCountry()).isEqualTo(billingRequest.getAddress().getCountry());
+    }
+
+    @Test
+    void shouldUpdateBillingAddress() {
+        //given
+        BillingRequest billingRequest = new BillingRequest()
+                .name(randomAlphabetic(10))
+                .email(Emails.email())
+                .vat(randomAlphabetic(10))
+                .phone(randomNumeric(9))
+                .address(new AddressRequest()
+                        .line1(randomAlphabetic(10))
+                        .line2(randomAlphabetic(10))
+                        .state(randomAlphabetic(10))
+                        .zip(randomNumeric(5))
+                        .city(randomAlphabetic(10))
+                        .country("SE"));
+
+        Customer customer = gateway.createCustomer(new CustomerRequest()
+                .email(Emails.email())
+                .billing(billingRequest));
+
+        BillingRequest updatedBillingRequest = new BillingRequest()
+                .name(randomAlphabetic(10))
+                .email(Emails.email())
+                .vat(randomAlphabetic(10))
+                .phone(randomNumeric(9))
+                .address(new AddressRequest()
+                        .line1(randomAlphabetic(10))
+                        .line2(randomAlphabetic(10))
+                        .state(randomAlphabetic(10))
+                        .zip(randomNumeric(5))
+                        .city(randomAlphabetic(10))
+                        .country("SE"));
+
+        //when
+        Customer updated = gateway.updateCustomer(new CustomerUpdateRequest()
+                .customer(customer)
+                .billing(updatedBillingRequest));
+
+        //then
+        assertThat(updated.getBilling().getEmail()).isEqualTo(updatedBillingRequest.getEmail());
+        assertThat(updated.getBilling().getName()).isEqualTo(updatedBillingRequest.getName());
+        assertThat(updated.getBilling().getVat()).isEqualTo(updatedBillingRequest.getVat());
+        assertThat(updated.getBilling().getPhone()).isEqualTo(updatedBillingRequest.getPhone());
+        assertThat(updated.getBilling().getAddress().getLine1()).isEqualTo(updatedBillingRequest.getAddress().getLine1());
+        assertThat(updated.getBilling().getAddress().getLine2()).isEqualTo(updatedBillingRequest.getAddress().getLine2());
+        assertThat(updated.getBilling().getAddress().getState()).isEqualTo(updatedBillingRequest.getAddress().getState());
+        assertThat(updated.getBilling().getAddress().getZip()).isEqualTo(updatedBillingRequest.getAddress().getZip());
+        assertThat(updated.getBilling().getAddress().getCity()).isEqualTo(updatedBillingRequest.getAddress().getCity());
+        assertThat(updated.getBilling().getAddress().getCountry()).isEqualTo(updatedBillingRequest.getAddress().getCountry());
+
+        // when
+        Customer retrieved = gateway.retrieveCustomer(customer.getId());
+
+        // then
+        assertThat(retrieved.getBilling().getEmail()).isEqualTo(updatedBillingRequest.getEmail());
+        assertThat(retrieved.getBilling().getName()).isEqualTo(updatedBillingRequest.getName());
+        assertThat(retrieved.getBilling().getVat()).isEqualTo(updatedBillingRequest.getVat());
+        assertThat(retrieved.getBilling().getPhone()).isEqualTo(updatedBillingRequest.getPhone());
+        assertThat(retrieved.getBilling().getAddress().getLine1()).isEqualTo(updatedBillingRequest.getAddress().getLine1());
+        assertThat(retrieved.getBilling().getAddress().getLine2()).isEqualTo(updatedBillingRequest.getAddress().getLine2());
+        assertThat(retrieved.getBilling().getAddress().getState()).isEqualTo(updatedBillingRequest.getAddress().getState());
+        assertThat(retrieved.getBilling().getAddress().getZip()).isEqualTo(updatedBillingRequest.getAddress().getZip());
+        assertThat(retrieved.getBilling().getAddress().getCity()).isEqualTo(updatedBillingRequest.getAddress().getCity());
+        assertThat(retrieved.getBilling().getAddress().getCountry()).isEqualTo(updatedBillingRequest.getAddress().getCountry());
     }
 }

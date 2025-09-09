@@ -21,6 +21,8 @@ public class Customer {
 	private List<Card> cards;
 	private Map<String, String> metadata;
 
+	private Billing billing;
+
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
 
@@ -72,6 +74,10 @@ public class Customer {
 
 	public Map<String, String> getMetadata() {
 		return metadata;
+	}
+
+	public Billing getBilling() {
+		return billing;
 	}
 
 	public String get(String name) {
