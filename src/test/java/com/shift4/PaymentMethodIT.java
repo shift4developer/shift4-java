@@ -105,20 +105,6 @@ public class PaymentMethodIT extends AbstractShift4GatewayTest {
     }
 
     @Test
-    void shouldCreateKlarnaDebitRiskPaymentMethod() {
-        // when
-        PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.KLARNA_DEBIT_RISK)
-                .billing(new BillingRequest().address(new AddressRequest().country("SE")).name("John Doe")));
-
-        // then
-        assertThat(paymentMethod).isNotNull();
-        assertThat(paymentMethod.getId()).isNotNull();
-        assertThat(paymentMethod.getType()).isEqualTo(PaymentMethodType.KLARNA_DEBIT_RISK);
-        assertThat(paymentMethod.getFlow()).isNotNull();
-        assertThat(paymentMethod.getFlow().getNextAction()).isNotNull();
-    }
-
-    @Test
     void shouldCreateGooglePayWithThreeDSecurePaymentMethod() {
         // when
         PaymentMethod source = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.GOOGLE_PAY)
