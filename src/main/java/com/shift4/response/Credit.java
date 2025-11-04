@@ -20,6 +20,7 @@ public class Credit {
 	private Boolean fast;
 	private Receiver receiver;
 	private String merchantAccountId;
+    private Boolean disputed;
 
 	private Map<String, String> metadata;
 
@@ -93,6 +94,10 @@ public class Credit {
 	public String getFailureMessage() {
 		return failureMessage;
 	}
+
+    public Boolean getDisputed() {
+        return disputed;
+    }
 
 	public String get(String name) {
 		if ("merchantAccountId".equals(name)) {
