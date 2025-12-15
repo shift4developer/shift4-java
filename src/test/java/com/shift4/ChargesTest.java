@@ -2,6 +2,7 @@ package com.shift4;
 
 import com.fasterxml.jackson.databind.SerializationFeature;
 import com.shift4.enums.ChargeStatus;
+import com.shift4.enums.ChargeType;
 import com.shift4.enums.ErrorType;
 import com.shift4.exception.Shift4Exception;
 import com.shift4.request.ChargeListRequest;
@@ -140,5 +141,15 @@ class ChargesTest extends AbstractShift4GatewayTest {
         assertThat(retrievedCharge.getAmount()).isEqualTo(request.getAmount());
         assertThat(retrievedCharge.getCurrency()).isEqualTo(request.getCurrency());
         assertThat(retrievedCharge.getFailureCode()).isNull();
+    }
+
+    @Test
+    void shouldSendChargeType() {
+        // given
+        ChargeRequest request = charge().card(successCard()).type(ChargeType.CUSTOMER_INITIATED);
+        // when
+        Charge charge = gateway.createCharge(request);
+        // then
+        assertThat(charge.getType()).isEqualTo(ChargeType.CUSTOMER_INITIATED);
     }
 }
