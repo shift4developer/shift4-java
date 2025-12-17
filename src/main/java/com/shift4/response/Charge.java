@@ -3,6 +3,7 @@ package com.shift4.response;
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shift4.enums.ChargeStatus;
+import com.shift4.enums.ChargeType;
 import com.shift4.enums.ErrorCode;
 import com.shift4.util.Shift4Utils;
 
@@ -20,7 +21,8 @@ public class Charge {
 	private String currency;
 	private String description;
 	private ChargeStatus status;
-	private Card card;
+    private ChargeType type;
+    private Card card;
 	private PaymentMethod paymentMethod;
 	private ChargeFlow flow;
 	private String customerId;
@@ -80,7 +82,11 @@ public class Charge {
 		return status;
 	}
 
-	public Card getCard() {
+    public ChargeType getType() {
+        return type;
+    }
+
+    public Card getCard() {
 		return card;
 	}
 

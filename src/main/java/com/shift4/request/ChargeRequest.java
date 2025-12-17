@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.shift4.enums.ChargeType;
 import com.shift4.response.Customer;
 
 import java.util.HashMap;
@@ -20,6 +21,7 @@ public class ChargeRequest {
 	private CardRequest card;
 	private PaymentMethodRequest paymentMethod;
 	private ChargeFlowRequest flow;
+    private ChargeType type;
 	private Boolean captured;
 	private ShippingRequest shipping;
 	private BillingRequest billing;
@@ -65,7 +67,11 @@ public class ChargeRequest {
 		return flow;
 	}
 
-	public Boolean getCaptured() {
+    public ChargeType getType() {
+        return type;
+    }
+
+    public Boolean getCaptured() {
 		return captured;
 	}
 
@@ -128,7 +134,12 @@ public class ChargeRequest {
 		return this;
 	}
 
-	public ChargeRequest captured(Boolean captured) {
+    public ChargeRequest type(ChargeType type) {
+        this.type = type;
+        return this;
+    }
+
+    public ChargeRequest captured(Boolean captured) {
 		this.captured = captured;
 		return this;
 	}
