@@ -1,0 +1,154 @@
+package com.shift4.request;
+
+import com.fasterxml.jackson.annotation.JsonAnyGetter;
+import com.fasterxml.jackson.annotation.JsonAnySetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.shift4.response.Customer;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+/**
+ * Request for creating a checkout session.
+ * <p>
+ * Checkout sessions power the checkout widget that merchants can embed on their websites.
+ * The merchant's backend creates a session via the SDK and passes it to the frontend widget for rendering.
+ */
+@JsonInclude(Include.NON_NULL)
+public class CheckoutSessionRequest {
+
+    private String customer;
+    private String paymentLinkId;
+    private String locale;
+    private List<LineItemRequest> lineItems;
+    private Boolean collectBillingAddress;
+    private Boolean collectShippingAddress;
+    private Map<String, String> metadata;
+    private String customFieldsTitle;
+    private List<CheckoutCustomField> customFields;
+    private Boolean capture;
+    private String merchantAccountId;
+
+    @JsonIgnore
+    private final Map<String, Object> other = new HashMap<>();
+
+    public CheckoutSessionRequest() {
+    }
+
+    public String getCustomer() {
+        return customer;
+    }
+
+    public String getPaymentLinkId() {
+        return paymentLinkId;
+    }
+
+    public String getLocale() {
+        return locale;
+    }
+
+    public List<LineItemRequest> getLineItems() {
+        return lineItems;
+    }
+
+    public Boolean getCollectBillingAddress() {
+        return collectBillingAddress;
+    }
+
+    public Boolean getCollectShippingAddress() {
+        return collectShippingAddress;
+    }
+
+    public Map<String, String> getMetadata() {
+        return metadata;
+    }
+
+    public String getCustomFieldsTitle() {
+        return customFieldsTitle;
+    }
+
+    public List<CheckoutCustomField> getCustomFields() {
+        return customFields;
+    }
+
+    public Boolean getCapture() {
+        return capture;
+    }
+
+    public String getMerchantAccountId() {
+        return merchantAccountId;
+    }
+
+    public CheckoutSessionRequest customer(String customer) {
+        this.customer = customer;
+        return this;
+    }
+
+    public CheckoutSessionRequest customer(Customer customer) {
+        return customer(customer.getId());
+    }
+
+    public CheckoutSessionRequest paymentLinkId(String paymentLinkId) {
+        this.paymentLinkId = paymentLinkId;
+        return this;
+    }
+
+    public CheckoutSessionRequest locale(String locale) {
+        this.locale = locale;
+        return this;
+    }
+
+    public CheckoutSessionRequest lineItems(List<LineItemRequest> lineItems) {
+        this.lineItems = lineItems;
+        return this;
+    }
+
+    public CheckoutSessionRequest collectBillingAddress(Boolean collectBillingAddress) {
+        this.collectBillingAddress = collectBillingAddress;
+        return this;
+    }
+
+    public CheckoutSessionRequest collectShippingAddress(Boolean collectShippingAddress) {
+        this.collectShippingAddress = collectShippingAddress;
+        return this;
+    }
+
+    public CheckoutSessionRequest metadata(Map<String, String> metadata) {
+        this.metadata = metadata;
+        return this;
+    }
+
+    public CheckoutSessionRequest customFieldsTitle(String customFieldsTitle) {
+        this.customFieldsTitle = customFieldsTitle;
+        return this;
+    }
+
+    public CheckoutSessionRequest customFields(List<CheckoutCustomField> customFields) {
+        this.customFields = customFields;
+        return this;
+    }
+
+    public CheckoutSessionRequest capture(Boolean capture) {
+        this.capture = capture;
+        return this;
+    }
+
+    public CheckoutSessionRequest merchantAccountId(String merchantAccountId) {
+        this.merchantAccountId = merchantAccountId;
+        return this;
+    }
+
+    @JsonAnyGetter
+    private Map<String, Object> getOtherMap() {
+        return other;
+    }
+
+    @JsonAnySetter
+    public CheckoutSessionRequest set(String name, Object value) {
+        other.put(name, value);
+        return this;
+    }
+}

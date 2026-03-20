@@ -40,6 +40,8 @@ public class Shift4Gateway implements Closeable {
     private static final String DISPUTES_PATH = "/disputes";
     private static final String FRAUD_WARNING_PATH = "/fraud-warnings";
     private static final String REFUND_PATH = "/refunds";
+    private static final String CHECKOUT_SESSIONS_PATH = "/checkout-sessions";
+    private static final String PRODUCTS_PATH = "/products";
 
     private final ObjectSerializer objectSerializer = ObjectSerializer.INSTANCE;
     private final ConnectionClient gatewayClient;
@@ -455,6 +457,38 @@ public class Shift4Gateway implements Closeable {
 
     public ListResponse<PayoutTransaction> listPayoutTransactions(PayoutTransactionListRequest request) {
         return list("/payout-transactions", request, PayoutTransaction.class);
+    }
+
+    public CheckoutSession createCheckoutSession(CheckoutSessionRequest request) {
+        return post(CHECKOUT_SESSIONS_PATH, request, CheckoutSession.class);
+    }
+
+    public CheckoutSession createCheckoutSession(CheckoutSessionRequest request, RequestOptions requestOptions) {
+        return post(CHECKOUT_SESSIONS_PATH, request, requestOptions, CheckoutSession.class);
+    }
+
+    public Product createProduct(ProductRequest request) {
+        return post(PRODUCTS_PATH, request, Product.class);
+    }
+
+    public Product retrieveProduct(String productId) {
+        return get(PRODUCTS_PATH + "/" + productId, Product.class);
+    }
+
+    public Product updateProduct(ProductUpdateRequest request) {
+        return post(PRODUCTS_PATH + "/" + request.getProductId(), request, Product.class);
+    }
+
+    public DeleteResponse deleteProduct(String productId) {
+        return delete(PRODUCTS_PATH + "/" + productId, DeleteResponse.class);
+    }
+
+    public ListResponse<Product> listProducts() {
+        return list(PRODUCTS_PATH, Product.class);
+    }
+
+    public ListResponse<Product> listProducts(ProductListRequest request) {
+        return list(PRODUCTS_PATH, request, Product.class);
     }
 
     @Override
