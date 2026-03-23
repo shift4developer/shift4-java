@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Represents a reference to an existing tax for checkout sessions.
+ * Represents a reference to an existing tax.
  */
 @JsonInclude(Include.NON_NULL)
 public class TaxRequest {

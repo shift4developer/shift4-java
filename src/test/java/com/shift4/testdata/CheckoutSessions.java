@@ -2,7 +2,7 @@ package com.shift4.testdata;
 
 
 import com.shift4.request.Amount;
-import com.shift4.request.CheckoutCustomField;
+import com.shift4.request.CheckoutCustomFieldRequest;
 import com.shift4.request.CheckoutProductRequest;
 import com.shift4.request.CheckoutSessionRequest;
 import com.shift4.request.LineItemRequest;
@@ -31,8 +31,8 @@ public abstract class CheckoutSessions {
                 .currency("USD");
     }
 
-    public static CheckoutCustomField customField() {
-        return new CheckoutCustomField()
+    public static CheckoutCustomFieldRequest customField() {
+        return new CheckoutCustomFieldRequest()
                 .key("company")
                 .label("Company")
                 .optional(false);

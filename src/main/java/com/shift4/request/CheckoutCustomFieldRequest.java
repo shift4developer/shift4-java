@@ -11,12 +11,10 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Represents a custom field for checkout sessions.
- * <p>
- * Note: Maximum 3 custom fields per checkout session. Label length is limited to 20 characters.
+ * Represents a custom field request.
  */
 @JsonInclude(Include.NON_NULL)
-public class CheckoutCustomField {
+public class CheckoutCustomFieldRequest {
 
     private String key;
     private String label;
@@ -27,7 +25,7 @@ public class CheckoutCustomField {
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
 
-    public CheckoutCustomField() {
+    public CheckoutCustomFieldRequest() {
     }
 
     public String getKey() {
@@ -50,27 +48,27 @@ public class CheckoutCustomField {
         return placement;
     }
 
-    public CheckoutCustomField key(String key) {
+    public CheckoutCustomFieldRequest key(String key) {
         this.key = key;
         return this;
     }
 
-    public CheckoutCustomField label(String label) {
+    public CheckoutCustomFieldRequest label(String label) {
         this.label = label;
         return this;
     }
 
-    public CheckoutCustomField labelTranslations(Map<String, String> labelTranslations) {
+    public CheckoutCustomFieldRequest labelTranslations(Map<String, String> labelTranslations) {
         this.labelTranslations = labelTranslations;
         return this;
     }
 
-    public CheckoutCustomField optional(Boolean optional) {
+    public CheckoutCustomFieldRequest optional(Boolean optional) {
         this.optional = optional;
         return this;
     }
 
-    public CheckoutCustomField placement(CustomFieldPlacement placement) {
+    public CheckoutCustomFieldRequest placement(CustomFieldPlacement placement) {
         this.placement = placement;
         return this;
     }
@@ -81,7 +79,7 @@ public class CheckoutCustomField {
     }
 
     @JsonAnySetter
-    public CheckoutCustomField set(String name, Object value) {
+    public CheckoutCustomFieldRequest set(String name, Object value) {
         other.put(name, value);
         return this;
     }

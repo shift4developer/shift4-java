@@ -3,7 +3,7 @@ package com.shift4;
 import com.shift4.enums.CustomFieldPlacement;
 import com.shift4.enums.Interval;
 import com.shift4.request.Amount;
-import com.shift4.request.CheckoutCustomField;
+import com.shift4.request.CheckoutCustomFieldRequest;
 import com.shift4.request.CheckoutProductRequest;
 import com.shift4.request.CheckoutSessionRequest;
 import com.shift4.request.LineItemRequest;
@@ -96,7 +96,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithCustomFields() {
         // given
-        CheckoutCustomField companyField = new CheckoutCustomField()
+        CheckoutCustomFieldRequest companyField = new CheckoutCustomFieldRequest()
                 .key("company")
                 .label("Company Name")
                 .optional(false)
@@ -228,7 +228,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
                 .currency("USD")
                 .description("Monthly premium plan");
 
-        CheckoutCustomField companyField = customField();
+        CheckoutCustomFieldRequest companyField = customField();
 
         Map<String, String> metadata = new HashMap<>();
         metadata.put("subscription_tier", "premium");

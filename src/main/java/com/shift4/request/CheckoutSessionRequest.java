@@ -28,7 +28,7 @@ public class CheckoutSessionRequest {
     private Boolean collectShippingAddress;
     private Map<String, String> metadata;
     private String customFieldsTitle;
-    private List<CheckoutCustomField> customFields;
+    private List<CheckoutCustomFieldRequest> customFields;
     private Boolean capture;
     private String merchantAccountId;
 
@@ -70,7 +70,7 @@ public class CheckoutSessionRequest {
         return customFieldsTitle;
     }
 
-    public List<CheckoutCustomField> getCustomFields() {
+    public List<CheckoutCustomFieldRequest> getCustomFields() {
         return customFields;
     }
 
@@ -126,7 +126,7 @@ public class CheckoutSessionRequest {
         return this;
     }
 
-    public CheckoutSessionRequest customFields(List<CheckoutCustomField> customFields) {
+    public CheckoutSessionRequest customFields(List<CheckoutCustomFieldRequest> customFields) {
         this.customFields = customFields;
         return this;
     }

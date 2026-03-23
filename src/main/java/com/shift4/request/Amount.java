@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents an amount for a product in a checkout session.
+ * Represents an amount for a product.
  * <p>
  * For simple products: set only the value field.
  * For donations: set options (predefined values) and/or custom (custom range).

@@ -2,6 +2,7 @@ package com.shift4.response;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.shift4.enums.CheckoutSessionStatus;
 import com.shift4.util.Shift4Utils;
 
 import java.util.HashMap;
@@ -26,8 +27,7 @@ public class CheckoutSession {
     private List<CheckoutSessionCustomField> customFields;
     private Boolean capture;
     private Boolean captchaRequired;
-    private Boolean deleted;
-    private Boolean expired;
+    private CheckoutSessionStatus status;
 
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
@@ -96,12 +96,8 @@ public class CheckoutSession {
         return captchaRequired;
     }
 
-    public Boolean getDeleted() {
-        return deleted;
-    }
-
-    public Boolean getExpired() {
-        return expired;
+    public CheckoutSessionStatus getStatus() {
+        return status;
     }
 
     public String get(String name) {

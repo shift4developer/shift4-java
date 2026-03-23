@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents a product reference for checkout session line items.
+ * Represents a flexible product reference for line items.
  * <p>
  * This is a flexible product type that can represent:
  * <ul>

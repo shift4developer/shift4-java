@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Represents a line item in a checkout session.
+ * Represents a line item request.
  */
 @JsonInclude(Include.NON_NULL)
 public class LineItemRequest {
