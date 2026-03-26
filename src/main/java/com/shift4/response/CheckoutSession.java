@@ -25,6 +25,7 @@ public class CheckoutSession {
     private String customFieldsTitle;
     private Map<String, String> customFieldsTitleTranslations;
     private List<CheckoutSessionCustomField> customFields;
+    private List<CheckoutSessionStaticField> staticFields;
     private Boolean capture;
     private Boolean captchaRequired;
     private CheckoutSessionStatus status;
@@ -86,6 +87,10 @@ public class CheckoutSession {
 
     public List<CheckoutSessionCustomField> getCustomFields() {
         return customFields;
+    }
+
+    public List<CheckoutSessionStaticField> getStaticFields() {
+        return staticFields;
     }
 
     public Boolean getCapture() {

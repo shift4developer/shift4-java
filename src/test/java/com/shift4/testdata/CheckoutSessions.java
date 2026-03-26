@@ -5,6 +5,7 @@ import com.shift4.request.Amount;
 import com.shift4.request.CheckoutCustomFieldRequest;
 import com.shift4.request.CheckoutProductRequest;
 import com.shift4.request.CheckoutSessionRequest;
+import com.shift4.request.CheckoutStaticFieldRequest;
 import com.shift4.request.LineItemRequest;
 
 import java.util.Collections;
@@ -36,6 +37,18 @@ public abstract class CheckoutSessions {
                 .key("company")
                 .label("Company")
                 .optional(false);
+    }
+
+    public static CheckoutStaticFieldRequest staticField() {
+        return new CheckoutStaticFieldRequest()
+                .key("order_id")
+                .value("ORD-12345");
+    }
+
+    public static CheckoutStaticFieldRequest staticField(String key, String value) {
+        return new CheckoutStaticFieldRequest()
+                .key(key)
+                .value(value);
     }
 
     public static CheckoutProductRequest subscriptionProduct(String planId) {

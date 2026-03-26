@@ -6,6 +6,7 @@ import com.shift4.request.Amount;
 import com.shift4.request.CheckoutCustomFieldRequest;
 import com.shift4.request.CheckoutProductRequest;
 import com.shift4.request.CheckoutSessionRequest;
+import com.shift4.request.CheckoutStaticFieldRequest;
 import com.shift4.request.LineItemRequest;
 import com.shift4.request.PlanRequest;
 import com.shift4.request.ProductRequest;
@@ -113,6 +114,79 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
         assertThat(session.getCustomFields()).hasSize(1);
         assertThat(session.getCustomFields().get(0).getKey()).isEqualTo("company");
         assertThat(session.getCustomFields().get(0).getLabel()).isEqualTo("Company Name");
+    }
+
+    @Test
+    void shouldCreateCheckoutSessionWithStaticFields() {
+        // given
+        CheckoutStaticFieldRequest orderIdField = new CheckoutStaticFieldRequest()
+                .key("order_id")
+                .value("ORD-12345");
+        CheckoutStaticFieldRequest trackingField = new CheckoutStaticFieldRequest()
+                .key("tracking_number")
+                .value("TRK-98765");
+
+        CheckoutSessionRequest request = checkoutSession()
+                .staticFields(Arrays.asList(orderIdField, trackingField));
+
+        // when
+        CheckoutSession session = gateway.createCheckoutSession(request);
+
+        // then
+        assertThat(session.getId()).isNotNull();
+        assertThat(session.getStaticFields()).hasSize(2);
+        assertThat(session.getStaticFields().get(0).getKey()).isEqualTo("order_id");
+        assertThat(session.getStaticFields().get(0).getValue()).isEqualTo("ORD-12345");
+        assertThat(session.getStaticFields().get(1).getKey()).isEqualTo("tracking_number");
+        assertThat(session.getStaticFields().get(1).getValue()).isEqualTo("TRK-98765");
+    }
+
+    @Test
+    void shouldCreateCheckoutSessionWithStaticAndCustomFields() {
+        // given
+        CheckoutStaticFieldRequest orderIdField = new CheckoutStaticFieldRequest()
+                .key("order_id")
+                .value("ORD-12345");
+        CheckoutCustomFieldRequest companyField = new CheckoutCustomFieldRequest()
+                .key("company")
+                .label("Company Name")
+                .optional(false);
+
+        CheckoutSessionRequest request = checkoutSession()
+                .staticFields(Collections.singletonList(orderIdField))
+                .customFields(Collections.singletonList(companyField));
+
+        // when
+        CheckoutSession session = gateway.createCheckoutSession(request);
+
+        // then
+        assertThat(session.getId()).isNotNull();
+        assertThat(session.getStaticFields()).hasSize(1);
+        assertThat(session.getStaticFields().get(0).getKey()).isEqualTo("order_id");
+        assertThat(session.getStaticFields().get(0).getValue()).isEqualTo("ORD-12345");
+        assertThat(session.getCustomFields()).hasSize(1);
+        assertThat(session.getCustomFields().get(0).getKey()).isEqualTo("company");
+        assertThat(session.getCustomFields().get(0).getLabel()).isEqualTo("Company Name");
+    }
+
+    @Test
+    void shouldCreateCheckoutSessionWithStaticFieldUsingBuilder() {
+        // given
+        CheckoutStaticFieldRequest referenceField = new CheckoutStaticFieldRequest()
+                .key("reference_code")
+                .value("REF-ABC123");
+
+        CheckoutSessionRequest request = checkoutSession()
+                .staticFields(Collections.singletonList(referenceField));
+
+        // when
+        CheckoutSession session = gateway.createCheckoutSession(request);
+
+        // then
+        assertThat(session.getId()).isNotNull();
+        assertThat(session.getStaticFields()).hasSize(1);
+        assertThat(session.getStaticFields().get(0).getKey()).isEqualTo("reference_code");
+        assertThat(session.getStaticFields().get(0).getValue()).isEqualTo("REF-ABC123");
     }
 
     @Test
