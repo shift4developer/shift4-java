@@ -119,7 +119,8 @@ class ChargesTest extends AbstractShift4GatewayTest {
 
         // then
         assertThat(charges.getList().size()).isEqualTo(1);
-        assertThat(charges).extracting(Charge::getId).doesNotContain(chargeToBeFilteredOut);
+        assertThat(charges).extracting(Charge::getId)
+                .doesNotContain(chargeToBeFilteredOut);
     }
 
     @Test
