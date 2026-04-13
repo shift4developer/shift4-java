@@ -1,5 +1,6 @@
 package com.shift4;
 
+import com.shift4.enums.CheckoutSessionAction;
 import com.shift4.enums.CustomFieldPlacement;
 import com.shift4.enums.Interval;
 import com.shift4.request.Amount;
@@ -396,4 +397,70 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
         assertThat(session.getLineItems().get(0).getProduct().getName())
                 .isEqualTo("Custom Donation");
     }
+
+    @Test
+    void shouldCreateCheckoutSessionWithAllowSavedCards() {
+        // given
+        Customer customer = gateway.createCustomer(customer(successCard()));
+
+        CheckoutSessionRequest request = checkoutSession()
+                .customer(customer)
+                .allowSavedCards(true);
+
+        // when
+        CheckoutSession session = gateway.createCheckoutSession(request);
+
+        // then
+        assertThat(session.getId()).isNotNull();
+        assertThat(session.getAllowSavedCards()).isTrue();
+    }
+
+    @Test
+    void shouldCreateCheckoutSessionWithCardVerificationAction() {
+        // given
+        Customer customer = gateway.createCustomer(customer(successCard()));
+
+        CheckoutSessionRequest request = new CheckoutSessionRequest()
+                .customer(customer)
+                .action(CheckoutSessionAction.CARD_VERIFICATION)
+                .capture(false)
+                .currency("USD");
+
+        // when
+        CheckoutSession session = gateway.createCheckoutSession(request);
+
+        // then
+        assertThat(session.getId()).isNotNull();
+        assertThat(session.getAction()).isEqualTo(CheckoutSessionAction.CARD_VERIFICATION);
+    }
+
+    @Test
+    void shouldCreateCheckoutSessionWithRedirectUrl() {
+        // given
+        CheckoutSessionRequest request = checkoutSession()
+                .redirectUrl("https://example.com/success");
+
+        // when
+        CheckoutSession session = gateway.createCheckoutSession(request);
+
+        // then
+        assertThat(session.getId()).isNotNull();
+        assertThat(session.getRedirectUrl()).isEqualTo("https://example.com/success");
+        assertThat(session.getUrl()).isNotNull();
+    }
+
+    @Test
+    void shouldCreateCheckoutSessionWithVendorReference() {
+        // given
+        CheckoutSessionRequest request = checkoutSession()
+                .vendorReference("INV-2024-001");
+
+        // when
+        CheckoutSession session = gateway.createCheckoutSession(request);
+
+        // then
+        assertThat(session.getId()).isNotNull();
+        assertThat(session.getVendorReference()).isEqualTo("INV-2024-001");
+    }
+
 }

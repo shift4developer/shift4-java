@@ -2,6 +2,7 @@ package com.shift4.response;
 
 import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.shift4.enums.CheckoutSessionAction;
 import com.shift4.enums.CheckoutSessionStatus;
 import com.shift4.util.Shift4Utils;
 
@@ -29,6 +30,12 @@ public class CheckoutSession {
     private Boolean capture;
     private Boolean captchaRequired;
     private CheckoutSessionStatus status;
+    private Boolean allowSavedCards;
+    private CheckoutSessionAction action;
+    private String currency;
+    private String url;
+    private String redirectUrl;
+    private String vendorReference;
 
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
@@ -103,6 +110,30 @@ public class CheckoutSession {
 
     public CheckoutSessionStatus getStatus() {
         return status;
+    }
+
+    public Boolean getAllowSavedCards() {
+        return allowSavedCards;
+    }
+
+    public CheckoutSessionAction getAction() {
+        return action;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public String getVendorReference() {
+        return vendorReference;
     }
 
     public String get(String name) {

@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.shift4.enums.CheckoutSessionAction;
 import com.shift4.response.Customer;
 
 import java.util.HashMap;
@@ -32,6 +33,11 @@ public class CheckoutSessionRequest {
     private List<CheckoutStaticFieldRequest> staticFields;
     private Boolean capture;
     private String merchantAccountId;
+    private Boolean allowSavedCards;
+    private CheckoutSessionAction action;
+    private String currency;
+    private String redirectUrl;
+    private String vendorReference;
 
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
@@ -85,6 +91,26 @@ public class CheckoutSessionRequest {
 
     public String getMerchantAccountId() {
         return merchantAccountId;
+    }
+
+    public Boolean getAllowSavedCards() {
+        return allowSavedCards;
+    }
+
+    public CheckoutSessionAction getAction() {
+        return action;
+    }
+
+    public String getCurrency() {
+        return currency;
+    }
+
+    public String getRedirectUrl() {
+        return redirectUrl;
+    }
+
+    public String getVendorReference() {
+        return vendorReference;
     }
 
     public CheckoutSessionRequest customer(String customer) {
@@ -148,6 +174,31 @@ public class CheckoutSessionRequest {
 
     public CheckoutSessionRequest merchantAccountId(String merchantAccountId) {
         this.merchantAccountId = merchantAccountId;
+        return this;
+    }
+
+    public CheckoutSessionRequest allowSavedCards(Boolean allowSavedCards) {
+        this.allowSavedCards = allowSavedCards;
+        return this;
+    }
+
+    public CheckoutSessionRequest action(CheckoutSessionAction action) {
+        this.action = action;
+        return this;
+    }
+
+    public CheckoutSessionRequest currency(String currency) {
+        this.currency = currency;
+        return this;
+    }
+
+    public CheckoutSessionRequest redirectUrl(String redirectUrl) {
+        this.redirectUrl = redirectUrl;
+        return this;
+    }
+
+    public CheckoutSessionRequest vendorReference(String vendorReference) {
+        this.vendorReference = vendorReference;
         return this;
     }
 
