@@ -3,10 +3,10 @@ package com.shift4.testdata;
 
 import com.shift4.request.Amount;
 import com.shift4.request.CheckoutCustomFieldRequest;
-import com.shift4.request.CheckoutProductRequest;
 import com.shift4.request.CheckoutSessionRequest;
 import com.shift4.request.CheckoutStaticFieldRequest;
 import com.shift4.request.LineItemRequest;
+import com.shift4.request.ProductRequest;
 
 import java.util.Collections;
 import java.util.List;
@@ -21,12 +21,12 @@ public abstract class CheckoutSessions {
                 .lineItems(Collections.singletonList(lineItem(simpleProduct())));
     }
 
-    public static LineItemRequest lineItem(CheckoutProductRequest product) {
+    public static LineItemRequest lineItem(ProductRequest product) {
         return new LineItemRequest(product, 1);
     }
 
-    public static CheckoutProductRequest simpleProduct() {
-        return new CheckoutProductRequest()
+    public static ProductRequest simpleProduct() {
+        return new ProductRequest()
                 .name("Test Product")
                 .amount(1000)
                 .currency("USD");
@@ -51,19 +51,19 @@ public abstract class CheckoutSessions {
                 .value(value);
     }
 
-    public static CheckoutProductRequest subscriptionProduct(String planId) {
-        return new CheckoutProductRequest(planId);
+    public static ProductRequest subscriptionProduct(String planId) {
+        return new ProductRequest(planId);
     }
 
-    public static CheckoutProductRequest donationProductWithOptions(List<Integer> options) {
-        return new CheckoutProductRequest()
+    public static ProductRequest donationProductWithOptions(List<Integer> options) {
+        return new ProductRequest()
                 .name("Donation")
                 .amount(new Amount().options(options))
                 .currency("USD");
     }
 
-    public static CheckoutProductRequest donationProductWithCustomRange(Integer min, Integer max) {
-        return new CheckoutProductRequest()
+    public static ProductRequest donationProductWithCustomRange(Integer min, Integer max) {
+        return new ProductRequest()
                 .name("Donation")
                 .amount(new Amount().custom(min, max))
                 .currency("USD");

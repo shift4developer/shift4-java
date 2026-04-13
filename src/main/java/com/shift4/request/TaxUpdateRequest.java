@@ -5,15 +5,18 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
+import com.shift4.response.Tax;
 
 import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(Include.NON_NULL)
-public class TaxRequest {
+public class TaxUpdateRequest {
 
-    private String id;
+    @JsonIgnore
+    private String taxId;
+
     private String name;
     private BigDecimal value;
     private String merchantAccountId;
@@ -21,15 +24,19 @@ public class TaxRequest {
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
 
-    public TaxRequest() {
+    public TaxUpdateRequest() {
     }
 
-    public TaxRequest(String id) {
-        this.id = id;
+    public TaxUpdateRequest(String taxId) {
+        taxId(taxId);
     }
 
-    public String getId() {
-        return id;
+    public TaxUpdateRequest(Tax tax) {
+        tax(tax);
+    }
+
+    public String getTaxId() {
+        return taxId;
     }
 
     public String getName() {
@@ -44,22 +51,26 @@ public class TaxRequest {
         return merchantAccountId;
     }
 
-    public TaxRequest id(String id) {
-        this.id = id;
+    public TaxUpdateRequest taxId(String taxId) {
+        this.taxId = taxId;
         return this;
     }
 
-    public TaxRequest name(String name) {
+    public TaxUpdateRequest tax(Tax tax) {
+        return taxId(tax.getId());
+    }
+
+    public TaxUpdateRequest name(String name) {
         this.name = name;
         return this;
     }
 
-    public TaxRequest value(BigDecimal value) {
+    public TaxUpdateRequest value(BigDecimal value) {
         this.value = value;
         return this;
     }
 
-    public TaxRequest merchantAccountId(String merchantAccountId) {
+    public TaxUpdateRequest merchantAccountId(String merchantAccountId) {
         this.merchantAccountId = merchantAccountId;
         return this;
     }
@@ -70,7 +81,7 @@ public class TaxRequest {
     }
 
     @JsonAnySetter
-    public TaxRequest set(String name, Object value) {
+    public TaxUpdateRequest set(String name, Object value) {
         other.put(name, value);
         return this;
     }

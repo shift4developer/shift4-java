@@ -26,7 +26,6 @@ public class ProductUpdateRequest {
     private String plan;
     private String merchantAccountId;
     private List<TaxRequest> taxes;
-    private Map<String, String> metadata;
 
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
@@ -80,10 +79,6 @@ public class ProductUpdateRequest {
 
     public List<TaxRequest> getTaxes() {
         return taxes;
-    }
-
-    public Map<String, String> getMetadata() {
-        return metadata;
     }
 
     public ProductUpdateRequest productId(String productId) {
@@ -142,11 +137,6 @@ public class ProductUpdateRequest {
 
     public ProductUpdateRequest taxes(List<TaxRequest> taxes) {
         this.taxes = taxes;
-        return this;
-    }
-
-    public ProductUpdateRequest metadata(Map<String, String> metadata) {
-        this.metadata = metadata;
         return this;
     }
 

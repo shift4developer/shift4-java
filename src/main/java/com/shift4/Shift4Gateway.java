@@ -42,6 +42,7 @@ public class Shift4Gateway implements Closeable {
     private static final String REFUND_PATH = "/refunds";
     private static final String CHECKOUT_SESSIONS_PATH = "/checkout-sessions";
     private static final String PRODUCTS_PATH = "/products";
+    private static final String TAXES_PATH = "/taxes";
 
     private final ObjectSerializer objectSerializer = ObjectSerializer.INSTANCE;
     private final ConnectionClient gatewayClient;
@@ -489,6 +490,26 @@ public class Shift4Gateway implements Closeable {
 
     public ListResponse<Product> listProducts(ProductListRequest request) {
         return list(PRODUCTS_PATH, request, Product.class);
+    }
+
+    public Tax createTax(TaxRequest request) {
+        return post(TAXES_PATH, request, Tax.class);
+    }
+
+    public Tax retrieveTax(String taxId) {
+        return get(TAXES_PATH + "/" + taxId, Tax.class);
+    }
+
+    public Tax updateTax(TaxUpdateRequest request) {
+        return post(TAXES_PATH + "/" + request.getTaxId(), request, Tax.class);
+    }
+
+    public ListResponse<Tax> listTaxes() {
+        return list(TAXES_PATH, Tax.class);
+    }
+
+    public ListResponse<Tax> listTaxes(TaxListRequest request) {
+        return list(TAXES_PATH, request, Tax.class);
     }
 
     @Override

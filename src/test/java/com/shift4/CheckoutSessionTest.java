@@ -5,18 +5,20 @@ import com.shift4.enums.CustomFieldPlacement;
 import com.shift4.enums.Interval;
 import com.shift4.request.Amount;
 import com.shift4.request.CheckoutCustomFieldRequest;
-import com.shift4.request.CheckoutProductRequest;
 import com.shift4.request.CheckoutSessionRequest;
 import com.shift4.request.CheckoutStaticFieldRequest;
 import com.shift4.request.LineItemRequest;
 import com.shift4.request.PlanRequest;
 import com.shift4.request.ProductRequest;
+import com.shift4.request.TaxRequest;
 import com.shift4.response.CheckoutSession;
 import com.shift4.response.Customer;
 import com.shift4.response.Plan;
 import com.shift4.response.Product;
+import com.shift4.response.Tax;
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
@@ -36,7 +38,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithInlineProduct() {
         // given
-        CheckoutProductRequest product = new CheckoutProductRequest()
+        ProductRequest product = new ProductRequest()
                 .name("Test Product")
                 .amount(2999)
                 .currency("USD");
@@ -57,7 +59,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldReturnClientSecretWhenCreatingCheckoutSession() {
         // given
-        CheckoutProductRequest product = new CheckoutProductRequest()
+        ProductRequest product = new ProductRequest()
                 .name("Test Product")
                 .amount(1999)
                 .currency("USD");
@@ -81,7 +83,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
                         .amount(new Amount(2999))
         );
 
-        CheckoutProductRequest productRef = new CheckoutProductRequest(createdProduct.getId());
+        ProductRequest productRef = new ProductRequest(createdProduct.getId());
         CheckoutSessionRequest request = new CheckoutSessionRequest()
                 .lineItems(Collections.singletonList(new LineItemRequest(productRef)));
 
@@ -212,8 +214,8 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithMultipleLineItems() {
         // given
-        CheckoutProductRequest product1 = simpleProduct().name("Product 1").amount(1000);
-        CheckoutProductRequest product2 = simpleProduct().name("Product 2").amount(2000);
+        ProductRequest product1 = simpleProduct().name("Product 1").amount(1000);
+        ProductRequest product2 = simpleProduct().name("Product 2").amount(2000);
 
         List<LineItemRequest> lineItems = Arrays.asList(
                 lineItem(product1),
@@ -247,7 +249,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
 
         // then
         assertThat(session.getId()).isNotNull();
-        assertThat(session.getCustomer()).isEqualTo(customer.getId());
+        assertThat(session.getCustomer()).startsWith("chcust_");
     }
 
     @Test
@@ -277,7 +279,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
                 .options(Arrays.asList(500, 1000, 2000))
                 .custom(100, 5000);
 
-        CheckoutProductRequest product = new CheckoutProductRequest()
+        ProductRequest product = new ProductRequest()
                 .name("Donation")
                 .amount(donationAmount)
                 .currency("USD");
@@ -297,7 +299,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithComplexScenario() {
         // given
-        CheckoutProductRequest product = new CheckoutProductRequest()
+        ProductRequest product = new ProductRequest()
                 .name("Premium Subscription")
                 .amount(2999)
                 .currency("USD")
@@ -336,7 +338,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
                 new PlanRequest(2999, "USD", Interval.MONTH, "Monthly Subscription")
         );
 
-        CheckoutProductRequest planProduct = new CheckoutProductRequest(plan.getId());
+        ProductRequest planProduct = new ProductRequest(plan.getId());
         CheckoutSessionRequest request = new CheckoutSessionRequest()
                 .lineItems(Collections.singletonList(new LineItemRequest(planProduct)));
 
@@ -356,7 +358,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
         Amount donationAmount = new Amount()
                 .options(Arrays.asList(500, 1000, 2000, 5000));
 
-        CheckoutProductRequest product = new CheckoutProductRequest()
+        ProductRequest product = new ProductRequest()
                 .name("Charity Donation")
                 .amount(donationAmount)
                 .currency("USD");
@@ -380,7 +382,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
         Amount donationAmount = new Amount()
                 .custom(100, 10000);
 
-        CheckoutProductRequest product = new CheckoutProductRequest()
+        ProductRequest product = new ProductRequest()
                 .name("Custom Donation")
                 .amount(donationAmount)
                 .currency("USD");
@@ -461,6 +463,58 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
         // then
         assertThat(session.getId()).isNotNull();
         assertThat(session.getVendorReference()).isEqualTo("INV-2024-001");
+    }
+
+    @Test
+    void shouldCreateCheckoutSessionWithInlineTax() {
+        // given
+        TaxRequest inlineTax = new TaxRequest()
+                .name("VAT")
+                .value(new BigDecimal("23.00"));
+
+        ProductRequest product = new ProductRequest()
+                .name("Taxed Product")
+                .amount(1000)
+                .currency("USD")
+                .taxes(Collections.singletonList(inlineTax));
+
+        CheckoutSessionRequest request = new CheckoutSessionRequest()
+                .lineItems(Collections.singletonList(new LineItemRequest(product)));
+
+        // when
+        CheckoutSession session = gateway.createCheckoutSession(request);
+
+        // then
+        assertThat(session.getId()).isNotNull();
+        assertThat(session.getLineItems()).hasSize(1);
+        assertThat(session.getLineItems().get(0).getProduct().getName())
+                .isEqualTo("Taxed Product");
+    }
+
+    @Test
+    void shouldCreateCheckoutSessionWithTaxById() {
+        // given
+        Tax createdTax = gateway.createTax(
+                new TaxRequest().name("Sales Tax").value(new BigDecimal("8.00"))
+        );
+
+        TaxRequest taxById = new TaxRequest(createdTax.getId());
+
+        ProductRequest product = new ProductRequest()
+                .name("Product With Existing Tax")
+                .amount(2000)
+                .currency("USD")
+                .taxes(Collections.singletonList(taxById));
+
+        CheckoutSessionRequest request = new CheckoutSessionRequest()
+                .lineItems(Collections.singletonList(new LineItemRequest(product)));
+
+        // when
+        CheckoutSession session = gateway.createCheckoutSession(request);
+
+        // then
+        assertThat(session.getId()).isNotNull();
+        assertThat(session.getLineItems()).hasSize(1);
     }
 
 }

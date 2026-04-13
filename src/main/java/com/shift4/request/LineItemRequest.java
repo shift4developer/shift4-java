@@ -15,7 +15,7 @@ import java.util.Map;
 @JsonInclude(Include.NON_NULL)
 public class LineItemRequest {
 
-    private CheckoutProductRequest product;
+    private ProductRequest product;
     private Integer quantity;
 
     @JsonIgnore
@@ -24,16 +24,16 @@ public class LineItemRequest {
     public LineItemRequest() {
     }
 
-    public LineItemRequest(CheckoutProductRequest product) {
+    public LineItemRequest(ProductRequest product) {
         this.product = product;
     }
 
-    public LineItemRequest(CheckoutProductRequest product, Integer quantity) {
+    public LineItemRequest(ProductRequest product, Integer quantity) {
         this.product = product;
         this.quantity = quantity;
     }
 
-    public CheckoutProductRequest getProduct() {
+    public ProductRequest getProduct() {
         return product;
     }
 
@@ -41,7 +41,7 @@ public class LineItemRequest {
         return quantity;
     }
 
-    public LineItemRequest product(CheckoutProductRequest product) {
+    public LineItemRequest product(ProductRequest product) {
         this.product = product;
         return this;
     }

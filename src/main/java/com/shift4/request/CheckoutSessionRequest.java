@@ -22,7 +22,6 @@ import java.util.Map;
 public class CheckoutSessionRequest {
 
     private String customer;
-    private String paymentLinkId;
     private String locale;
     private List<LineItemRequest> lineItems;
     private Boolean collectBillingAddress;
@@ -47,10 +46,6 @@ public class CheckoutSessionRequest {
 
     public String getCustomer() {
         return customer;
-    }
-
-    public String getPaymentLinkId() {
-        return paymentLinkId;
     }
 
     public String getLocale() {
@@ -120,11 +115,6 @@ public class CheckoutSessionRequest {
 
     public CheckoutSessionRequest customer(Customer customer) {
         return customer(customer.getId());
-    }
-
-    public CheckoutSessionRequest paymentLinkId(String paymentLinkId) {
-        this.paymentLinkId = paymentLinkId;
-        return this;
     }
 
     public CheckoutSessionRequest locale(String locale) {

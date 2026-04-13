@@ -9,10 +9,7 @@ import com.shift4.response.ListResponse;
 import com.shift4.response.Product;
 import org.junit.jupiter.api.Test;
 
-import java.util.Arrays;
-
 import static com.shift4.testdata.Products.product;
-import static java.util.Collections.singletonMap;
 import static org.assertj.core.api.Assertions.assertThat;
 
 class ProductTest extends AbstractShift4GatewayTest {
@@ -21,8 +18,7 @@ class ProductTest extends AbstractShift4GatewayTest {
     void shouldCreateProduct() {
         // given
         ProductRequest request = product()
-                .description("Test product for CRUD operations")
-                .metadata(singletonMap("test-key", "Test value"));
+                .description("Test product for CRUD operations");
         // when
         Product created = gateway.createProduct(request);
         // then

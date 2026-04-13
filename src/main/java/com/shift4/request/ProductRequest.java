@@ -13,6 +13,7 @@ import java.util.Map;
 @JsonInclude(Include.NON_NULL)
 public class ProductRequest {
 
+    private String id;
     private String name;
     private String currency;
     private Amount amount;
@@ -22,7 +23,6 @@ public class ProductRequest {
     private String plan;
     private String merchantAccountId;
     private List<TaxRequest> taxes;
-    private Map<String, String> metadata;
 
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
@@ -30,8 +30,16 @@ public class ProductRequest {
     public ProductRequest() {
     }
 
+    public ProductRequest(String id) {
+        this.id = id;
+    }
+
     public ProductRequest(String name, String currency) {
         name(name).currency(currency);
+    }
+
+    public String getId() {
+        return id;
     }
 
     public String getName() {
@@ -70,8 +78,9 @@ public class ProductRequest {
         return taxes;
     }
 
-    public Map<String, String> getMetadata() {
-        return metadata;
+    public ProductRequest id(String id) {
+        this.id = id;
+        return this;
     }
 
     public ProductRequest name(String name) {
@@ -121,11 +130,6 @@ public class ProductRequest {
 
     public ProductRequest taxes(List<TaxRequest> taxes) {
         this.taxes = taxes;
-        return this;
-    }
-
-    public ProductRequest metadata(Map<String, String> metadata) {
-        this.metadata = metadata;
         return this;
     }
 
