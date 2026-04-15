@@ -14,7 +14,7 @@ import java.util.Map;
  * Represents a custom field request.
  */
 @JsonInclude(Include.NON_NULL)
-public class CheckoutCustomFieldRequest {
+public class CheckoutSessionCustomFieldRequest {
 
     private String key;
     private String label;
@@ -25,7 +25,7 @@ public class CheckoutCustomFieldRequest {
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
 
-    public CheckoutCustomFieldRequest() {
+    public CheckoutSessionCustomFieldRequest() {
     }
 
     public String getKey() {
@@ -48,27 +48,27 @@ public class CheckoutCustomFieldRequest {
         return placement;
     }
 
-    public CheckoutCustomFieldRequest key(String key) {
+    public CheckoutSessionCustomFieldRequest key(String key) {
         this.key = key;
         return this;
     }
 
-    public CheckoutCustomFieldRequest label(String label) {
+    public CheckoutSessionCustomFieldRequest label(String label) {
         this.label = label;
         return this;
     }
 
-    public CheckoutCustomFieldRequest labelTranslations(Map<String, String> labelTranslations) {
+    public CheckoutSessionCustomFieldRequest labelTranslations(Map<String, String> labelTranslations) {
         this.labelTranslations = labelTranslations;
         return this;
     }
 
-    public CheckoutCustomFieldRequest optional(Boolean optional) {
+    public CheckoutSessionCustomFieldRequest optional(Boolean optional) {
         this.optional = optional;
         return this;
     }
 
-    public CheckoutCustomFieldRequest placement(CustomFieldPlacement placement) {
+    public CheckoutSessionCustomFieldRequest placement(CustomFieldPlacement placement) {
         this.placement = placement;
         return this;
     }
@@ -79,7 +79,7 @@ public class CheckoutCustomFieldRequest {
     }
 
     @JsonAnySetter
-    public CheckoutCustomFieldRequest set(String name, Object value) {
+    public CheckoutSessionCustomFieldRequest set(String name, Object value) {
         other.put(name, value);
         return this;
     }

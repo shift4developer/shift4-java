@@ -1,10 +1,10 @@
 package com.shift4.testdata;
 
 
-import com.shift4.request.Amount;
-import com.shift4.request.CheckoutCustomFieldRequest;
+import com.shift4.request.AmountRequest;
+import com.shift4.request.CheckoutSessionCustomFieldRequest;
 import com.shift4.request.CheckoutSessionRequest;
-import com.shift4.request.CheckoutStaticFieldRequest;
+import com.shift4.request.CheckoutSessionStaticFieldRequest;
 import com.shift4.request.LineItemRequest;
 import com.shift4.request.ProductRequest;
 
@@ -32,21 +32,21 @@ public abstract class CheckoutSessions {
                 .currency("USD");
     }
 
-    public static CheckoutCustomFieldRequest customField() {
-        return new CheckoutCustomFieldRequest()
+    public static CheckoutSessionCustomFieldRequest customField() {
+        return new CheckoutSessionCustomFieldRequest()
                 .key("company")
                 .label("Company")
                 .optional(false);
     }
 
-    public static CheckoutStaticFieldRequest staticField() {
-        return new CheckoutStaticFieldRequest()
+    public static CheckoutSessionStaticFieldRequest staticField() {
+        return new CheckoutSessionStaticFieldRequest()
                 .key("order_id")
                 .value("ORD-12345");
     }
 
-    public static CheckoutStaticFieldRequest staticField(String key, String value) {
-        return new CheckoutStaticFieldRequest()
+    public static CheckoutSessionStaticFieldRequest staticField(String key, String value) {
+        return new CheckoutSessionStaticFieldRequest()
                 .key(key)
                 .value(value);
     }
@@ -58,14 +58,14 @@ public abstract class CheckoutSessions {
     public static ProductRequest donationProductWithOptions(List<Integer> options) {
         return new ProductRequest()
                 .name("Donation")
-                .amount(new Amount().options(options))
+                .amount(new AmountRequest().options(options))
                 .currency("USD");
     }
 
     public static ProductRequest donationProductWithCustomRange(Integer min, Integer max) {
         return new ProductRequest()
                 .name("Donation")
-                .amount(new Amount().custom(min, max))
+                .amount(new AmountRequest().custom(min, max))
                 .currency("USD");
     }
 }

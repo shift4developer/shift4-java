@@ -3,10 +3,10 @@ package com.shift4;
 import com.shift4.enums.CheckoutSessionAction;
 import com.shift4.enums.CustomFieldPlacement;
 import com.shift4.enums.Interval;
-import com.shift4.request.Amount;
-import com.shift4.request.CheckoutCustomFieldRequest;
+import com.shift4.request.AmountRequest;
+import com.shift4.request.CheckoutSessionCustomFieldRequest;
 import com.shift4.request.CheckoutSessionRequest;
-import com.shift4.request.CheckoutStaticFieldRequest;
+import com.shift4.request.CheckoutSessionStaticFieldRequest;
 import com.shift4.request.LineItemRequest;
 import com.shift4.request.PlanRequest;
 import com.shift4.request.ProductRequest;
@@ -80,7 +80,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
         // given
         Product createdProduct = gateway.createProduct(
                 new ProductRequest("Test Product", "USD")
-                        .amount(new Amount(2999))
+                        .amount(new AmountRequest(2999))
         );
 
         ProductRequest productRef = new ProductRequest(createdProduct.getId());
@@ -100,7 +100,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithCustomFields() {
         // given
-        CheckoutCustomFieldRequest companyField = new CheckoutCustomFieldRequest()
+        CheckoutSessionCustomFieldRequest companyField = new CheckoutSessionCustomFieldRequest()
                 .key("company")
                 .label("Company Name")
                 .optional(false)
@@ -122,10 +122,10 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithStaticFields() {
         // given
-        CheckoutStaticFieldRequest orderIdField = new CheckoutStaticFieldRequest()
+        CheckoutSessionStaticFieldRequest orderIdField = new CheckoutSessionStaticFieldRequest()
                 .key("order_id")
                 .value("ORD-12345");
-        CheckoutStaticFieldRequest trackingField = new CheckoutStaticFieldRequest()
+        CheckoutSessionStaticFieldRequest trackingField = new CheckoutSessionStaticFieldRequest()
                 .key("tracking_number")
                 .value("TRK-98765");
 
@@ -147,10 +147,10 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithStaticAndCustomFields() {
         // given
-        CheckoutStaticFieldRequest orderIdField = new CheckoutStaticFieldRequest()
+        CheckoutSessionStaticFieldRequest orderIdField = new CheckoutSessionStaticFieldRequest()
                 .key("order_id")
                 .value("ORD-12345");
-        CheckoutCustomFieldRequest companyField = new CheckoutCustomFieldRequest()
+        CheckoutSessionCustomFieldRequest companyField = new CheckoutSessionCustomFieldRequest()
                 .key("company")
                 .label("Company Name")
                 .optional(false);
@@ -175,7 +175,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithStaticFieldUsingBuilder() {
         // given
-        CheckoutStaticFieldRequest referenceField = new CheckoutStaticFieldRequest()
+        CheckoutSessionStaticFieldRequest referenceField = new CheckoutSessionStaticFieldRequest()
                 .key("reference_code")
                 .value("REF-ABC123");
 
@@ -275,7 +275,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithDonation() {
         // given
-        Amount donationAmount = new Amount()
+        AmountRequest donationAmount = new AmountRequest()
                 .options(Arrays.asList(500, 1000, 2000))
                 .custom(100, 5000);
 
@@ -305,7 +305,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
                 .currency("USD")
                 .description("Monthly premium plan");
 
-        CheckoutCustomFieldRequest companyField = customField();
+        CheckoutSessionCustomFieldRequest companyField = customField();
 
         Map<String, String> metadata = new HashMap<>();
         metadata.put("subscription_tier", "premium");
@@ -355,7 +355,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithDonationOptionsOnly() {
         // given
-        Amount donationAmount = new Amount()
+        AmountRequest donationAmount = new AmountRequest()
                 .options(Arrays.asList(500, 1000, 2000, 5000));
 
         ProductRequest product = new ProductRequest()
@@ -379,7 +379,7 @@ class CheckoutSessionTest extends AbstractShift4GatewayTest {
     @Test
     void shouldCreateCheckoutSessionWithDonationCustomRangeOnly() {
         // given
-        Amount donationAmount = new Amount()
+        AmountRequest donationAmount = new AmountRequest()
                 .custom(100, 10000);
 
         ProductRequest product = new ProductRequest()

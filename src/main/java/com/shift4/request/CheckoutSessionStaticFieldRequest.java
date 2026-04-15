@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @JsonInclude(Include.NON_NULL)
-public class CheckoutStaticFieldRequest {
+public class CheckoutSessionStaticFieldRequest {
 
     private String key;
     private String value;
@@ -18,7 +18,7 @@ public class CheckoutStaticFieldRequest {
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
 
-    public CheckoutStaticFieldRequest() {
+    public CheckoutSessionStaticFieldRequest() {
     }
 
     public String getKey() {
@@ -29,12 +29,12 @@ public class CheckoutStaticFieldRequest {
         return value;
     }
 
-    public CheckoutStaticFieldRequest key(String key) {
+    public CheckoutSessionStaticFieldRequest key(String key) {
         this.key = key;
         return this;
     }
 
-    public CheckoutStaticFieldRequest value(String value) {
+    public CheckoutSessionStaticFieldRequest value(String value) {
         this.value = value;
         return this;
     }
@@ -45,7 +45,7 @@ public class CheckoutStaticFieldRequest {
     }
 
     @JsonAnySetter
-    public CheckoutStaticFieldRequest set(String name, Object value) {
+    public CheckoutSessionStaticFieldRequest set(String name, Object value) {
         other.put(name, value);
         return this;
     }

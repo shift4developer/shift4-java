@@ -19,7 +19,7 @@ public class ProductUpdateRequest {
 
     private String name;
     private String currency;
-    private Amount amount;
+    private AmountRequest amount;
     private String description;
     private Boolean donation;
     private Boolean active;
@@ -53,7 +53,7 @@ public class ProductUpdateRequest {
         return currency;
     }
 
-    public Amount getAmount() {
+    public AmountRequest getAmount() {
         return amount;
     }
 
@@ -100,13 +100,13 @@ public class ProductUpdateRequest {
         return this;
     }
 
-    public ProductUpdateRequest amount(Amount amount) {
+    public ProductUpdateRequest amount(AmountRequest amount) {
         this.amount = amount;
         return this;
     }
 
     public ProductUpdateRequest amount(Integer value) {
-        this.amount = new Amount(value);
+        this.amount = new AmountRequest(value);
         return this;
     }
 

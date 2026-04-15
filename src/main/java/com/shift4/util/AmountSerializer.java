@@ -3,7 +3,7 @@ package com.shift4.util;
 import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.SerializerProvider;
-import com.shift4.request.Amount;
+import com.shift4.request.AmountRequest;
 
 import java.io.IOException;
 
@@ -13,10 +13,10 @@ import java.io.IOException;
  * Serializes simple amounts (with only value set) as plain integers,
  * and donation amounts (with options/custom) as objects.
  */
-public class AmountSerializer extends JsonSerializer<Amount> {
+public class AmountSerializer extends JsonSerializer<AmountRequest> {
 
     @Override
-    public void serialize(Amount amount, JsonGenerator gen, SerializerProvider serializers) throws IOException {
+    public void serialize(AmountRequest amount, JsonGenerator gen, SerializerProvider serializers) throws IOException {
         if (amount == null) {
             gen.writeNull();
             return;

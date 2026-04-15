@@ -28,8 +28,8 @@ public class CheckoutSessionRequest {
     private Boolean collectShippingAddress;
     private Map<String, String> metadata;
     private String customFieldsTitle;
-    private List<CheckoutCustomFieldRequest> customFields;
-    private List<CheckoutStaticFieldRequest> staticFields;
+    private List<CheckoutSessionCustomFieldRequest> customFields;
+    private List<CheckoutSessionStaticFieldRequest> staticFields;
     private Boolean capture;
     private String merchantAccountId;
     private Boolean allowSavedCards;
@@ -72,11 +72,11 @@ public class CheckoutSessionRequest {
         return customFieldsTitle;
     }
 
-    public List<CheckoutCustomFieldRequest> getCustomFields() {
+    public List<CheckoutSessionCustomFieldRequest> getCustomFields() {
         return customFields;
     }
 
-    public List<CheckoutStaticFieldRequest> getStaticFields() {
+    public List<CheckoutSessionStaticFieldRequest> getStaticFields() {
         return staticFields;
     }
 
@@ -147,12 +147,12 @@ public class CheckoutSessionRequest {
         return this;
     }
 
-    public CheckoutSessionRequest customFields(List<CheckoutCustomFieldRequest> customFields) {
+    public CheckoutSessionRequest customFields(List<CheckoutSessionCustomFieldRequest> customFields) {
         this.customFields = customFields;
         return this;
     }
 
-    public CheckoutSessionRequest staticFields(List<CheckoutStaticFieldRequest> staticFields) {
+    public CheckoutSessionRequest staticFields(List<CheckoutSessionStaticFieldRequest> staticFields) {
         this.staticFields = staticFields;
         return this;
     }

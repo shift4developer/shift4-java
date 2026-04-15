@@ -20,7 +20,7 @@ import java.util.Map;
  */
 @JsonInclude(Include.NON_NULL)
 @JsonSerialize(using = AmountSerializer.class)
-public class Amount {
+public class AmountRequest {
 
     private Integer value;
     private List<Integer> options;
@@ -29,10 +29,10 @@ public class Amount {
     @JsonIgnore
     private final Map<String, Object> other = new HashMap<>();
 
-    public Amount() {
+    public AmountRequest() {
     }
 
-    public Amount(Integer value) {
+    public AmountRequest(Integer value) {
         this.value = value;
     }
 
@@ -48,22 +48,22 @@ public class Amount {
         return custom;
     }
 
-    public Amount value(Integer value) {
+    public AmountRequest value(Integer value) {
         this.value = value;
         return this;
     }
 
-    public Amount options(List<Integer> options) {
+    public AmountRequest options(List<Integer> options) {
         this.options = options;
         return this;
     }
 
-    public Amount custom(CustomAmount custom) {
+    public AmountRequest custom(CustomAmount custom) {
         this.custom = custom;
         return this;
     }
 
-    public Amount custom(Integer min, Integer max) {
+    public AmountRequest custom(Integer min, Integer max) {
         this.custom = new CustomAmount(min, max);
         return this;
     }
@@ -74,7 +74,7 @@ public class Amount {
     }
 
     @JsonAnySetter
-    public Amount set(String name, Object value) {
+    public AmountRequest set(String name, Object value) {
         other.put(name, value);
         return this;
     }

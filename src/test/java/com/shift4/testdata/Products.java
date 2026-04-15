@@ -1,9 +1,7 @@
 package com.shift4.testdata;
 
-import com.shift4.request.Amount;
+import com.shift4.request.AmountRequest;
 import com.shift4.request.ProductRequest;
-
-import java.util.Arrays;
 
 public abstract class Products {
 
@@ -12,7 +10,7 @@ public abstract class Products {
 
     public static ProductRequest product() {
         return new ProductRequest("Test Product", "USD")
-                .amount(new Amount(1000))
+                .amount(new AmountRequest(1000))
                 .description("Test product description")
                 .active(true);
     }

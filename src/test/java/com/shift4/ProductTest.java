@@ -1,6 +1,6 @@
 package com.shift4;
 
-import com.shift4.request.Amount;
+import com.shift4.request.AmountRequest;
 import com.shift4.request.ProductListRequest;
 import com.shift4.request.ProductRequest;
 import com.shift4.request.ProductUpdateRequest;
@@ -50,7 +50,7 @@ class ProductTest extends AbstractShift4GatewayTest {
                 .name("Updated Product Name")
                 .description("Updated description")
                 .currency(created.getCurrency())
-                .amount(new Amount(2500));
+                .amount(new AmountRequest(2500));
         Product updated = gateway.updateProduct(request);
         // then
         assertThat(updated.getId()).isEqualTo(created.getId());
