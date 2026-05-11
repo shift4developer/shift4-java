@@ -18,6 +18,7 @@ public class PaymentMethodRequest {
 	private ThreeDSecure threeDSecure;
 	private GooglePay googlePay;
 	private Swish swish;
+	private Mbway mbway;
 	private Blik blik;
 	private String source;
 	private Map<String, String> metadata;
@@ -71,6 +72,10 @@ public class PaymentMethodRequest {
 
 	public Swish getSwish() {
 		return swish;
+	}
+
+	public Mbway getMbway() {
+		return mbway;
 	}
 
 	public Blik getBlik() {
@@ -138,6 +143,10 @@ public class PaymentMethodRequest {
 		return this;
 	}
 
+	public PaymentMethodRequest mbway(Mbway mbway) {
+		this.mbway = mbway;
+		return this;
+	}
 
 	public PaymentMethodRequest blik(Blik blik) {
 		this.blik = blik;
@@ -230,6 +239,24 @@ public class PaymentMethodRequest {
 			@JsonProperty("app_redirect") APP_REDIRECT,
 			@JsonProperty("phone_number") PHONE_NUMBER,
 			@JsonProperty("qr_code") QR_CODE
+		}
+	}
+
+	public static class Mbway {
+
+		private MbwayLinkMethod linkMethod;
+
+		public Mbway(MbwayLinkMethod linkMethod) {
+			this.linkMethod = linkMethod;
+		}
+
+		public MbwayLinkMethod getLinkMethod() {
+			return linkMethod;
+		}
+
+		public enum MbwayLinkMethod {
+			@JsonProperty("redirect") REDIRECT,
+			@JsonProperty("phone_number") PHONE_NUMBER,
 		}
 	}
 
