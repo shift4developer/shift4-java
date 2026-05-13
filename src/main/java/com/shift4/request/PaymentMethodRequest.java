@@ -246,12 +246,20 @@ public class PaymentMethodRequest {
 
 		private MbwayLinkMethod linkMethod;
 
+		@JsonIgnore
+		private final Map<String, Object> other = new HashMap<>();
+
 		public Mbway(MbwayLinkMethod linkMethod) {
 			this.linkMethod = linkMethod;
 		}
 
 		public MbwayLinkMethod getLinkMethod() {
 			return linkMethod;
+		}
+
+		@JsonAnyGetter
+		private Map<String, Object> getOtherMap() {
+			return other;
 		}
 
 		public enum MbwayLinkMethod {
