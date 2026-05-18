@@ -73,6 +73,22 @@ public class PaymentMethodIT extends AbstractShift4GatewayTest {
     }
 
     @Test
+    void shouldCreateMbwayPaymentMethod() {
+        // when
+        PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.MBWAY)
+                .billing(new BillingRequest().address(new AddressRequest().country("PT")).name("John Doe"))
+                .mbway(new PaymentMethodRequest.Mbway(PaymentMethodRequest.Mbway.MbwayLinkMethod.REDIRECT)));
+
+        // then
+        assertThat(paymentMethod).isNotNull();
+        assertThat(paymentMethod.getId()).isNotNull();
+        assertThat(paymentMethod.getType()).isEqualTo(PaymentMethodType.MBWAY);
+
+        assertThat(paymentMethod.getFlow()).isNotNull();
+        assertThat(paymentMethod.getFlow().getNextAction()).isNotNull();
+    }
+
+    @Test
     void shouldCreateBlikPaymentMethod() {
         // when
         PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.BLIK)

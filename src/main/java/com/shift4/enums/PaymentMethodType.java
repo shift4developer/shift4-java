@@ -18,6 +18,7 @@ public enum PaymentMethodType {
 	LATVIANBANKS("latvianbanks"),
 	LITHUANIANBANKS("lithuanianbanks"),
 	MAXIMA("maxima"),
+	MBWAY("mbway"),
 	MULTIBANCO("multibanco"),
 	MYBANK("mybank"),
 	P24("p24"),
