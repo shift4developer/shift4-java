@@ -5,12 +5,8 @@ import com.shift4.enums.ChargeStatus;
 import com.shift4.enums.ChargeType;
 import com.shift4.enums.ErrorType;
 import com.shift4.exception.Shift4Exception;
-import com.shift4.request.ChargeListRequest;
-import com.shift4.request.ChargeRequest;
-import com.shift4.request.RequestOptions;
-import com.shift4.response.Charge;
-import com.shift4.response.Customer;
-import com.shift4.response.ListResponse;
+import com.shift4.request.*;
+import com.shift4.response.*;
 import com.shift4.utils.ListResponseUtils;
 import org.junit.jupiter.api.Test;
 
@@ -18,6 +14,7 @@ import java.util.UUID;
 
 import static com.fasterxml.jackson.databind.SerializationFeature.WRITE_DATE_TIMESTAMPS_AS_NANOSECONDS;
 import static com.shift4.enums.ErrorCode.INCORRECT_CVC;
+import static com.shift4.enums.Interval.DAY;
 import static com.shift4.testdata.Cards.incorrectCvcCard;
 import static com.shift4.testdata.Cards.successCard;
 import static com.shift4.testdata.Charges.charge;
@@ -105,6 +102,25 @@ class ChargesTest extends AbstractShift4GatewayTest {
         assertThat(page2.getHasMore()).isTrue();
         assertThat(page3).extracting(Charge::getId).containsExactly(charge2, charge1);
         assertThat(page3.getHasMore()).isFalse();
+    }
+
+    @Test
+    void shouldListChargesBySubscriptionId() {
+        // given
+        Customer customer = gateway.createCustomer(customer(successCard()));
+        Plan plan = gateway.createPlan(new PlanRequest(1, "USD", DAY, "oneDayPlan"));
+        SubscriptionRequest request = new SubscriptionRequest(customer, plan);
+
+        String subscription = gateway.createSubscription(request).getId();
+        String chargeToBeFilteredOut = gateway.createCharge(charge().customer(customer)).getId();
+
+        // when
+        ListResponse<Charge> charges = gateway.listCharges(new ChargeListRequest().subscriptionId(subscription));
+
+        // then
+        assertThat(charges.getList().size()).isEqualTo(1);
+        assertThat(charges).extracting(Charge::getId)
+                .doesNotContain(chargeToBeFilteredOut);
     }
 
     @Test

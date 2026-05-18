@@ -21,6 +21,7 @@ public class ChargeListRequest {
 
 	private CreatedFilter created;
 	private String customerId;
+	private String subscriptionId;
 
 	@JsonIgnore
 	private final Map<String, Object> other = new HashMap<>();
@@ -47,6 +48,10 @@ public class ChargeListRequest {
 
 	public String getCustomerId() {
 		return customerId;
+	}
+
+	public String getSubscriptionId() {
+		return subscriptionId;
 	}
 
 	public ChargeListRequest limit(Integer limit) {
@@ -94,6 +99,11 @@ public class ChargeListRequest {
 	public ChargeListRequest customer(Customer customer) {
 		return customerId(customer.getId());
 	}
+
+    public ChargeListRequest subscriptionId(String subscriptionId) {
+        this.subscriptionId = subscriptionId;
+        return this;
+    }
 
 	@JsonAnyGetter
 	private Map<String, Object> getOtherMap() {
