@@ -5,6 +5,10 @@ import com.fasterxml.jackson.annotation.JsonValue;
 
 public enum DisputeStatus {
 
+	INQUIRY_NEW("inquiry_new"),
+	INQUIRY_RESPONSE_UNDER_REVIEW("inquiry_response_under_review"),
+	INQUIRY_REPRESENTED("inquiry_represented"),
+
 	RETRIEVAL_REQUEST_NEW("retrieval_request_new"),
 	RETRIEVAL_REQUEST_RESPONSE_UNDER_REVIEW("retrieval_request_response_under_review"),
 	RETRIEVAL_REQUEST_REPRESENTED("retrieval_request_represented"),
