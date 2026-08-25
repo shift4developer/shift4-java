@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.shift4.util.Shift4Utils;
 
+import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -12,7 +13,7 @@ public class Tax {
     private String id;
     private Long created;
     private String name;
-    private Integer value;
+    private BigDecimal value;
     private Boolean active;
 
     @JsonIgnore
@@ -30,7 +31,7 @@ public class Tax {
         return name;
     }
 
-    public Integer getValue() {
+    public BigDecimal getValue() {
         return value;
     }
 
