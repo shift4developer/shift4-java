@@ -16,7 +16,7 @@ public class Product {
     private Boolean donation;
     private String name;
     private String description;
-    private Object amount;
+    private Amount amount;
     private String currency;
     private String plan;
     private Boolean deleted;
@@ -51,7 +51,7 @@ public class Product {
         return description;
     }
 
-    public Object getAmount() {
+    public Amount getAmount() {
         return amount;
     }
 

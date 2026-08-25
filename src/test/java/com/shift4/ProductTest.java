@@ -25,7 +25,7 @@ class ProductTest extends AbstractShift4GatewayTest {
         assertThat(created.getId()).isNotBlank();
         assertThat(created.getName()).isEqualTo(request.getName());
         assertThat(created.getCurrency()).isEqualTo(request.getCurrency());
-        assertThat(created.getAmount()).isEqualTo(request.getAmount().getValue());
+        assertThat(created.getAmount().getValue()).isEqualTo(request.getAmount().getValue());
         assertThat(created.getDescription()).isEqualTo(request.getDescription());
         assertThat(created.getActive()).isTrue();
         assertThat(created.getDeleted()).isFalse();
@@ -56,7 +56,7 @@ class ProductTest extends AbstractShift4GatewayTest {
         assertThat(updated.getId()).isEqualTo(created.getId());
         assertThat(updated.getName()).isEqualTo("Updated Product Name");
         assertThat(updated.getDescription()).isEqualTo("Updated description");
-        assertThat(updated.getAmount()).isEqualTo(2500);
+        assertThat(updated.getAmount().getValue()).isEqualTo(2500);
     }
 
     @Test
