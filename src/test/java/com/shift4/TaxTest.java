@@ -23,7 +23,7 @@ class TaxTest extends AbstractShift4GatewayTest {
         // then
         assertThat(created.getId()).isNotBlank();
         assertThat(created.getName()).isEqualTo("VAT");
-        assertThat(created.getValue()).isEqualTo(23);
+        assertThat(created.getValue()).isEqualByComparingTo(new BigDecimal("23.00"));
         assertThat(created.getActive()).isTrue();
     }
 
@@ -49,7 +49,7 @@ class TaxTest extends AbstractShift4GatewayTest {
         // then
         assertThat(updated.getId()).isEqualTo(created.getId());
         assertThat(updated.getName()).isEqualTo("Updated Tax");
-        assertThat(updated.getValue()).isEqualTo(10);
+        assertThat(updated.getValue()).isEqualByComparingTo(new BigDecimal("10.00"));
     }
 
     @Test
