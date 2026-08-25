@@ -109,7 +109,7 @@ public class PaymentMethodIT extends AbstractShift4GatewayTest {
         PaymentMethod paymentMethod = gateway.createPaymentMethod(new PaymentMethodRequest(PaymentMethodType.BLIK)
                 .billing(new BillingRequest().address(new AddressRequest().country("PL")).name("John Doe"))
                 .fraudCheckData(new FraudCheckDataRequest().userAgent("").ipAddress("127.0.0.1"))
-                .blik(new PaymentMethodRequest.Blik().code("123456")));
+                .blik(new PaymentMethodRequest.Blik().code("111001")));
 
         // then
         assertThat(paymentMethod).isNotNull();
