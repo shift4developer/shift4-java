@@ -3,6 +3,8 @@ package com.shift4.testdata;
 import com.shift4.request.AmountRequest;
 import com.shift4.request.ProductRequest;
 
+import java.util.Arrays;
+
 public abstract class Products {
 
     private Products() {
@@ -21,6 +23,6 @@ public abstract class Products {
 
     public static ProductRequest donationProduct() {
         return new ProductRequest("Donation", "USD")
-                .donation(true);
+                .amount(new AmountRequest().options(Arrays.asList(10,20,50,100)));
     }
 }

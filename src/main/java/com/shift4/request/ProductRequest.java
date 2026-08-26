@@ -58,10 +58,6 @@ public class ProductRequest {
         return description;
     }
 
-    public Boolean getDonation() {
-        return donation;
-    }
-
     public Boolean getActive() {
         return active;
     }
@@ -105,11 +101,6 @@ public class ProductRequest {
 
     public ProductRequest description(String description) {
         this.description = description;
-        return this;
-    }
-
-    public ProductRequest donation(Boolean donation) {
-        this.donation = donation;
         return this;
     }
 

@@ -13,7 +13,7 @@ public class Product {
     private String id;
     private Long created;
     private Long updated;
-    private Boolean donation;
+    private String donation;
     private String name;
     private String description;
     private Amount amount;
@@ -39,7 +39,7 @@ public class Product {
         return updated;
     }
 
-    public Boolean getDonation() {
+    public String getDonation() {
         return donation;
     }
 
