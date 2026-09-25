@@ -191,6 +191,7 @@ public class Charge {
 
     public static class External {
         private String schemeTransactionId;
+        private String transactionLinkId;
         private String vendorReference;
 
         @JsonIgnore
@@ -198,6 +199,10 @@ public class Charge {
 
         public String getSchemeTransactionId() {
             return schemeTransactionId;
+        }
+
+        public String getTransactionLinkId() {
+            return transactionLinkId;
         }
 
         public String getVendorReference() {
