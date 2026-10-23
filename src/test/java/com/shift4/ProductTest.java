@@ -49,7 +49,6 @@ class ProductTest extends AbstractShift4GatewayTest {
         ProductUpdateRequest request = new ProductUpdateRequest(created)
                 .name("Updated Product Name")
                 .description("Updated description")
-                .currency(created.getCurrency())
                 .amount(new AmountRequest(2500));
         Product updated = gateway.updateProduct(request);
         // then
@@ -57,6 +56,42 @@ class ProductTest extends AbstractShift4GatewayTest {
         assertThat(updated.getName()).isEqualTo("Updated Product Name");
         assertThat(updated.getDescription()).isEqualTo("Updated description");
         assertThat(updated.getAmount().getValue()).isEqualTo(2500);
+        assertThat(updated.getCurrency()).isEqualTo(created.getCurrency());
+    }
+
+    @Test
+    @SuppressWarnings("deprecation")
+    void shouldIgnoreCurrencyChangeOnUpdate() {
+        // given
+        Product created = gateway.createProduct(product());
+        // when
+        ProductUpdateRequest request = new ProductUpdateRequest(created)
+                .name("Updated Product Name")
+                .currency("EUR")
+                .amount(new AmountRequest(2500));
+        Product updated = gateway.updateProduct(request);
+        // then
+        assertThat(created.getCurrency()).isEqualTo("USD");
+        assertThat(updated.getName()).isEqualTo("Updated Product Name");
+        assertThat(updated.getCurrency()).isEqualTo(created.getCurrency());
+        assertThat(gateway.retrieveProduct(created.getId()).getCurrency()).isEqualTo(created.getCurrency());
+    }
+
+    @Test
+    void shouldIgnoreCurrencySentOnUpdate() {
+        // given
+        Product created = gateway.createProduct(product());
+        // when
+        ProductUpdateRequest request = new ProductUpdateRequest(created)
+                .name("Updated Product Name")
+                .amount(new AmountRequest(2500))
+                .set("currency", "EUR");
+        Product updated = gateway.updateProduct(request);
+        // then
+        assertThat(created.getCurrency()).isEqualTo("USD");
+        assertThat(updated.getName()).isEqualTo("Updated Product Name");
+        assertThat(updated.getCurrency()).isEqualTo(created.getCurrency());
+        assertThat(gateway.retrieveProduct(created.getId()).getCurrency()).isEqualTo(created.getCurrency());
     }
 
     @Test

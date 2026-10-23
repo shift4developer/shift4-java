@@ -18,6 +18,8 @@ public class ProductUpdateRequest {
     private String productId;
 
     private String name;
+    @Deprecated
+    @JsonIgnore
     private String currency;
     private AmountRequest amount;
     private String description;
@@ -49,6 +51,10 @@ public class ProductUpdateRequest {
         return name;
     }
 
+    /**
+     * @deprecated Product currency cannot be changed - this value is ignored on update. Will be removed in a future version.
+     */
+    @Deprecated
     public String getCurrency() {
         return currency;
     }
@@ -95,6 +101,10 @@ public class ProductUpdateRequest {
         return this;
     }
 
+    /**
+     * @deprecated Product currency cannot be changed - this value is ignored on update. Will be removed in a future version.
+     */
+    @Deprecated
     public ProductUpdateRequest currency(String currency) {
         this.currency = currency;
         return this;
